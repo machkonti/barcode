@@ -75,11 +75,7 @@ public class MainActivity extends Activity implements OnClickListener {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if(requestCode == ADD_ACTIVITY_REQUEST_CODE) {
-            if(resultCode == RESULT_OK) {
-                displayStocksList();
-            }
-        }
+
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
             String scanContent = scanningResult.getContents();
@@ -89,7 +85,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
             this.sql = new SQLHelper(this);
 
-            this.stock = sql.getStock(scanContent);
+            this.stock = sql.getStock(bCode);
 
             if(stock == null) {
                 addBcodeDialot();
