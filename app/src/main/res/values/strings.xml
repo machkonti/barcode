@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">BarcodeScanningApp</string>
+    <string name="scan">Scan</string>
+    <string name="title_activity_stock_details">StockDetails</string>
+    <string name="title_activity_add_stock">AddStock</string>
+</resources>
