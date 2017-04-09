@@ -1,5 +1,7 @@
 package com.example.machkonti.barcodescanningapp.Database;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,16 @@ public class StocksWithExps {
     private String bCode;
     private String name;
     private List<Expires> exp;
+    private Context context;
 
     public StocksWithExps() {
+
+    }
+
+    public StocksWithExps(Context context, String bCode) {
+        this.context = context;
+        this.bCode = bCode;
+        setExpiresFromDb();
     }
 
     public StocksWithExps(Stocks s, List<Expires> e) {
@@ -27,8 +37,15 @@ public class StocksWithExps {
         this.exp = exp;
     }
 
+    public void setExpiresFromDb() {
+        SQLHelper db = new SQLHelper(context);
+        Stocks s = db.getStock(this.bCode);
+        this.name = s.getName();
+        this.exp = db.getExpiresByBCode(this.bCode);
+    }
+
     public String getbCode() {
-        return bCode;
+        return this.bCode;
     }
 
     public void setbCode(String bCode) {
@@ -36,7 +53,7 @@ public class StocksWithExps {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -44,7 +61,7 @@ public class StocksWithExps {
     }
 
     public List<Expires> getExp() {
-        return sortExps(exp);
+        return sortExps(this.exp);
     }
 
     public void setExp(List<Expires> exp) {
@@ -52,8 +69,8 @@ public class StocksWithExps {
     }
 
     public List<Expires> sortExps(List<Expires> e) {
-        if(e == null) return new ArrayList<Expires>();
-        if(e.size() < 1 || e.isEmpty()) return new ArrayList<>();
+        if (e == null) return new ArrayList<>();
+        if (e.size() < 1 || e.isEmpty()) return new ArrayList<>();
 
         List<Expires> tmp = e;
 

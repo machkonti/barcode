@@ -11,13 +11,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by machkonti on 30.3.2017 г..
  */
 
 public class SQLHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String database_name = "Stocks";
 
@@ -32,6 +33,11 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     private static final String[] s_columns = {s_bCode,s_name};
     private static final String[] e_columns = {e_bCode,e_expire,e_daysToNotice};
+    private static final String CREATE_TABLE_STOCKS = "CREATE TABLE " + table_stocks +
+            " ( " + s_bCode + " TEXT PRIMARY KEY," +
+            s_name + " TEXT )";
+    private static final String CRETE_TABLE_EXPIRE = "CREATE TABLE " + table_exprire +
+            " ( " + e_bCode + " TEXT PRIMARY KEY, " + e_expire + " DATE, " + e_daysToNotice + " INTEGER )";
 
     public SQLHelper(Context context) {
         super(context, database_name, null, DATABASE_VERSION);
@@ -40,13 +46,6 @@ public class SQLHelper extends SQLiteOpenHelper {
     public SQLHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
-
-    private static final String CREATE_TABLE_STOCKS = "CREATE TABLE " + table_stocks +
-            " ( " + s_bCode + " TEXT PRIMARY KEY," +
-            s_name + " TEXT )";
-
-    private static final String CRETE_TABLE_EXPIRE = "CREATE TABLE " + table_exprire +
-            " ( " + e_bCode + " TEXT PRIMARY KEY, " + e_expire + " DATE, " + e_daysToNotice + " INTEGER )";
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -89,8 +88,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         if(cursor == null) return null;
         if(cursor.getCount() == 0) return null;
         cursor.moveToFirst();
-        Stocks s = new Stocks(cursor.getString(0),cursor.getString(1));
-        return s;
+        return new Stocks(cursor.getString(0), cursor.getString(1));
     }
 
 
@@ -110,14 +108,20 @@ public class SQLHelper extends SQLiteOpenHelper {
 
         return stocks;
     }
-    public List<Expires> getExpiresByBCode(String bCode) throws ParseException {
+
+    public List<Expires> getExpiresByBCode(String bCode) {
         List<Expires> expires = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(table_exprire, e_columns, e_bCode + "=?", new String[]{bCode},null,null,null,null);
         if(cursor.moveToFirst()) {
             do {
-                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-                Date d = sf.parse(cursor.getString(1));
+                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                Date d = null;
+                try {
+                    d = sf.parse(cursor.getString(1));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 Expires e = new Expires(cursor.getString(0),d,Integer.parseInt(cursor.getString(2)));
                 expires.add(e);
             } while(cursor.moveToNext());
@@ -138,7 +142,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + table_exprire ;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-        cursor.close();
+//        cursor.close();
         return cursor.getCount();
     }
 
@@ -146,7 +150,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + table_exprire + " WHERE " + e_bCode + " = " + bCode;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-        cursor.close();
+//        cursor.close();
         return cursor.getCount();
     }
 

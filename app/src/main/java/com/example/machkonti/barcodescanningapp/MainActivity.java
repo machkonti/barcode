@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -22,7 +23,6 @@ import com.example.machkonti.barcodescanningapp.Database.StocksWithExps;
 import com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator;
 import com.example.machkonti.barcodescanningapp.integration.android.IntentResult;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +74,11 @@ public class MainActivity extends Activity implements OnClickListener {
         }
     }
 
+    private Stocks getStock(String bCode) {
+        SQLHelper db = new SQLHelper(this);
+        return db.getStock(bCode);
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
@@ -83,9 +88,9 @@ public class MainActivity extends Activity implements OnClickListener {
 
             this.bCode = scanningResult.getContents();
 
-            this.sql = new SQLHelper(this);
+            Log.e("TAG :: ", scanningResult.toString());
 
-            this.stock = sql.getStock(bCode);
+            Stocks stock = getStock(this.bCode);
 
             if(stock == null) {
                 addBcodeDialot();
@@ -146,12 +151,8 @@ public class MainActivity extends Activity implements OnClickListener {
         List<String> rValue = new ArrayList<>();
         for(int i = 0 ; i < stocks.size();i++) {
             Stocks s = stocks.get(i);
-            List<Expires> te = null;
-            try {
-                te = sqh.getExpiresByBCode(s.getbCode());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            List<Expires> te = sqh.getExpiresByBCode(s.getbCode());
+
             StocksWithExps t = new StocksWithExps(s.getbCode(),s.getName(),te);
             list.add(t);
             String sb = s.getName() + " :: " + s.getbCode();

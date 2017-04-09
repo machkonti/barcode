@@ -1,8 +1,7 @@
 package com.example.machkonti.barcodescanningapp;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.util.Log;
+import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,10 +9,7 @@ import android.widget.TextView;
 import com.example.machkonti.barcodescanningapp.Database.Expires;
 import com.example.machkonti.barcodescanningapp.Database.SQLHelper;
 import com.example.machkonti.barcodescanningapp.Database.Stocks;
-import com.example.machkonti.barcodescanningapp.Database.StocksWithExps;
-import com.example.machkonti.barcodescanningapp.R;
 
-import java.text.ParseException;
 import java.util.List;
 
 public class StockDetails extends Activity {
@@ -24,7 +20,8 @@ public class StockDetails extends Activity {
     private ListView expiresView;
 
     private String bCode;
-    private StocksWithExps stock;
+    private Stocks stock;
+    private List<Expires> epxs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +40,19 @@ public class StockDetails extends Activity {
         bCodeView.setText(stock.getbCode());
         nameView.setText(stock.getName());
 
-        ArrayAdapter<Expires> adapter = new ArrayAdapter<Expires>(this, android.R.layout.simple_list_item_1, stock.getExp());
+        ArrayAdapter<Expires> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getEpxs(bCode));
         expiresView.setAdapter(adapter);
     }
 
-    private StocksWithExps getStock(String bCode) {
+    private List<Expires> getEpxs(String bCode) {
         SQLHelper db = new SQLHelper(this);
-        Stocks s = db.getStock(bCode);
-        List<Expires> e = null;
-        try {
-            e = db.getExpiresByBCode(bCode);
-        } catch (ParseException e1) {
-            e1.printStackTrace();
-        }
-       return new StocksWithExps(s,e);
+        return db.getExpiresByBCode(bCode);
+    }
+
+    private Stocks getStock(String bCode) {
+        SQLHelper db = new SQLHelper(this);
+
+        return db.getStock(bCode);
     }
 
 }

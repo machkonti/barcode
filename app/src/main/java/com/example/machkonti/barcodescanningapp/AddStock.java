@@ -1,9 +1,9 @@
 package com.example.machkonti.barcodescanningapp;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,6 +18,7 @@ import com.example.machkonti.barcodescanningapp.Database.Stocks;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class AddStock extends Activity {
     TextView bCode;
@@ -29,6 +30,12 @@ public class AddStock extends Activity {
     private Calendar calendar;
 
     private int year, month, day;
+    private DatePickerDialog.OnDateSetListener mDatePickerListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            expire.setText(new StringBuilder().append(year).append("-").append(month + 1).append("-").append(dayOfMonth));
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +75,8 @@ public class AddStock extends Activity {
                 exp = expire.getText().toString();
                 avans = daysAdvance.getText().toString();
 
-                Stocks st = new Stocks(namev,bcode);
-                SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+                Stocks st = new Stocks(bcode, namev);
+                SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                 Date expDate = new Date();
 
                 try {
@@ -102,13 +109,6 @@ public class AddStock extends Activity {
 
         return null;
     }
-
-    private DatePickerDialog.OnDateSetListener mDatePickerListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            expire.setText(new StringBuilder().append(year).append("-").append(month+1).append("-").append(dayOfMonth));
-        }
-    };
 
 
 }
