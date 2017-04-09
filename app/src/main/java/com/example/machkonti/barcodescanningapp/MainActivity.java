@@ -3,16 +3,9 @@ package com.example.machkonti.barcodescanningapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
-import android.os.Bundle;
-
-import com.example.machkonti.barcodescanningapp.Database.Expires;
-import com.example.machkonti.barcodescanningapp.Database.SQLHelper;
-import com.example.machkonti.barcodescanningapp.Database.Stocks;
-import com.example.machkonti.barcodescanningapp.Database.StocksWithExps;
-import com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator;
-import com.example.machkonti.barcodescanningapp.integration.android.IntentResult;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -22,6 +15,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.machkonti.barcodescanningapp.Database.Expires;
+import com.example.machkonti.barcodescanningapp.Database.SQLHelper;
+import com.example.machkonti.barcodescanningapp.Database.Stocks;
+import com.example.machkonti.barcodescanningapp.Database.StocksWithExps;
+import com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator;
+import com.example.machkonti.barcodescanningapp.integration.android.IntentResult;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.List;
 public class MainActivity extends Activity implements OnClickListener {
     private static final int ADD_ACTIVITY_REQUEST_CODE = 1;
     private static final int STOCK_DETAILS_ACTIVITY_REQUEST_CODE = 2;
-
+    List<Stocks> stocksArrayList;
     private Button scanBtn;
     private TextView formatTxt, contentTxt;
     private String bCode;
@@ -37,8 +37,6 @@ public class MainActivity extends Activity implements OnClickListener {
     private Stocks stock;
     private Activity mActivity;
     private ListView stockList;
-    List<Stocks> stocksArrayList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,19 +54,14 @@ public class MainActivity extends Activity implements OnClickListener {
     }
 
     private void displayStocksList() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, makeList());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, makeList());
         stockList.setAdapter(adapter);
         final Context context = this;
         stockList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Stocks s = stocksArrayList.get(position);
-                Intent detailedIntent = new Intent(context, StockDetails.class);
-                Bundle b = new Bundle();
-                b.putString("bcode", s.getbCode());
-                detailedIntent.putExtras(b);
-
-                startActivity(detailedIntent);
+                startDetailsActivity(s.getbCode());
             }
         });
     }
@@ -100,6 +93,9 @@ public class MainActivity extends Activity implements OnClickListener {
 
             if(stock == null) {
                 addBcodeDialot();
+            } else {
+                startDetailsActivity(this.bCode);
+
             }
 //            formatTxt.setText("FORMAT: " + scanFormat);
 //            contentTxt.setText("CONTENT: " + scanContent);
@@ -136,6 +132,15 @@ public class MainActivity extends Activity implements OnClickListener {
         this.startActivityForResult(i, ADD_ACTIVITY_REQUEST_CODE);
     }
 
+    public void startDetailsActivity(String bCode) {
+        Intent detailedIntent = new Intent(this, StockDetails.class);
+        Bundle b = new Bundle();
+        b.putString("bcode", bCode);
+        detailedIntent.putExtras(b);
+
+        startActivity(detailedIntent);
+    }
+
 
 
     private List<String> makeList() {
@@ -153,9 +158,8 @@ public class MainActivity extends Activity implements OnClickListener {
             }
             StocksWithExps t = new StocksWithExps(s.getbCode(),s.getName(),te);
             list.add(t);
-            StringBuilder sb = new StringBuilder();
-            sb.append(s.getName() + " :: "+ s.getbCode());
-            rValue.add(sb.toString());
+            String sb = s.getName() + " :: " + s.getbCode();
+            rValue.add(sb);
         }
         this.stocksArrayList = stocks;
         return rValue;
