@@ -42,6 +42,9 @@ public class StockDetails extends Activity {
 
         ArrayAdapter<Expires> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getEpxs(bCode));
         expiresView.setAdapter(adapter);
+
+        getActionBar().setTitle(stock.getName());
+        getActionBar().show();
     }
 
     private List<Expires> getEpxs(String bCode) {

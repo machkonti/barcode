@@ -30,6 +30,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private static final int ADD_ACTIVITY_REQUEST_CODE = 1;
     private static final int STOCK_DETAILS_ACTIVITY_REQUEST_CODE = 2;
     List<Stocks> stocksArrayList;
+    ArrayAdapter<String> adapter;
     private Button scanBtn;
     private TextView formatTxt, contentTxt;
     private String bCode;
@@ -54,7 +55,7 @@ public class MainActivity extends Activity implements OnClickListener {
     }
 
     private void displayStocksList() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, makeList());
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, makeList());
         stockList.setAdapter(adapter);
         final Context context = this;
         stockList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,6 +106,9 @@ public class MainActivity extends Activity implements OnClickListener {
                     "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
         }
+
+        displayStocksList();
+
     }
 
     public void addBcodeDialot() {
