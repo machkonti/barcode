@@ -2,6 +2,8 @@ package com.example.machkonti.barcodescanningapp;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,6 +17,8 @@ import java.util.List;
 public class StockDetails extends Activity {
     private static final String TAG = StockDetails.class.getSimpleName();
 
+    private Toolbar toolbar;
+
     private TextView bCodeView;
     private TextView nameView;
     private ListView expiresView;
@@ -27,6 +31,8 @@ public class StockDetails extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_details);
+
+        toolbar = (Toolbar) findViewById(R.id.my_toolbar1);
 
         bCodeView = (TextView) findViewById(R.id.bCode);
         nameView = (TextView) findViewById(R.id.name);
@@ -43,8 +49,16 @@ public class StockDetails extends Activity {
         ArrayAdapter<Expires> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getEpxs(bCode));
         expiresView.setAdapter(adapter);
 
-        getActionBar().setTitle(stock.getName());
-        getActionBar().show();
+        toolbar.setCollapsible(true);
+//        toolbar.setTitle(stock.getName());
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.stock_details_menu, menu);
+        return true;
     }
 
     private List<Expires> getEpxs(String bCode) {
