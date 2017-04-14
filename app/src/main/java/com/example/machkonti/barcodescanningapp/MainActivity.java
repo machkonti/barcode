@@ -41,6 +41,9 @@ public class MainActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        SQLHelper sp = new SQLHelper(this);
+//        sp.onUpgrade(sp.getWritableDatabase(),2,2);
+
         Button scanBtn = (Button) findViewById(R.id.scan_button);
         stockList = (ListView) findViewById(R.id.stocks);
 

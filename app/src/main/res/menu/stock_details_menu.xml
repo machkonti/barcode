@@ -2,17 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_main_setting"
+        android:id="@+id/add_new_expire"
         android:actionLayout="@layout/toolbar"
+        android:icon="@drawable/plus"
         android:orderInCategory="100"
-        android:title="@string/settings"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/menu_main_setting2"
-        android:actionLayout="@layout/toolbar"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:orderInCategory="200"
         android:title="@string/settings"
         app:showAsAction="ifRoom" />
 

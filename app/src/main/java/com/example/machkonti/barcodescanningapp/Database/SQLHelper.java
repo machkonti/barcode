@@ -37,7 +37,7 @@ public class SQLHelper extends SQLiteOpenHelper {
             " ( " + s_bCode + " TEXT PRIMARY KEY," +
             s_name + " TEXT )";
     private static final String CRETE_TABLE_EXPIRE = "CREATE TABLE " + table_exprire +
-            " ( " + e_bCode + " TEXT PRIMARY KEY, " + e_expire + " DATE, " + e_daysToNotice + " INTEGER )";
+            " ( " + e_bCode + " TEXT , " + e_expire + " DATE, " + e_daysToNotice + " INTEGER )";
 
     public SQLHelper(Context context) {
         super(context, database_name, null, DATABASE_VERSION);
@@ -72,11 +72,13 @@ public class SQLHelper extends SQLiteOpenHelper {
     }
 
     public void createExpire(Expires e) {
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(e_bCode, e.getbCode());
-        values.put(e_expire, e.getExpDate().toString());
+        values.put(e_expire, sf.format(e.getExpDate()));
         values.put(e_daysToNotice, e.getDaysToNotice());
 
         db.insert(table_stocks, null, values);
