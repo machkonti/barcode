@@ -37,7 +37,7 @@ public class StocksWithExps {
         this.exp = exp;
     }
 
-    public void setExpiresFromDb() {
+    private void setExpiresFromDb() {
         SQLHelper db = new SQLHelper(context);
         Stocks s = db.getStock(this.bCode);
         this.name = s.getName();
@@ -68,25 +68,23 @@ public class StocksWithExps {
         this.exp = exp;
     }
 
-    public List<Expires> sortExps(List<Expires> e) {
+    private List<Expires> sortExps(List<Expires> e) {
         if (e == null) return new ArrayList<>();
         if (e.size() < 1 || e.isEmpty()) return new ArrayList<>();
 
-        List<Expires> tmp = e;
-
-        for (int i = 0; i < tmp.size(); i++) {
-            Expires t1 = tmp.get(i);
-            for (int u = 0; u < tmp.size(); u++) {
+        for (int i = 0; i < e.size(); i++) {
+            Expires t1 = e.get(i);
+            for (int u = 0; u < e.size(); u++) {
                 long d1 = t1.getExpDate().getTime() - (t1.getDaysToNotice() * 24 * 60 * 60);
-                long d2 = tmp.get(u).getExpDate().getTime() - (tmp.get(u).getDaysToNotice() * 24 * 60 * 60);
+                long d2 = e.get(u).getExpDate().getTime() - (e.get(u).getDaysToNotice() * 24 * 60 * 60);
                 if (d2 < d1) {
-                    Expires tu = tmp.get(u);
-                    tmp.set(u, t1);
-                    tmp.set(i, tu);
+                    Expires tu = e.get(u);
+                    e.set(u, t1);
+                    e.set(i, tu);
                 }
             }
         }
-        return tmp;
+        return e;
     }
 
     @Override

@@ -87,11 +87,9 @@ public class SQLHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(table_stocks, s_columns, s_bCode + "=?", new String[]{bCode}, null, null, null, null);
         if (cursor == null) {
-            cursor.close();
             return null;
         }
         if (cursor.getCount() == 0) {
-            cursor.close();
             return null;
         }
         cursor.moveToFirst();

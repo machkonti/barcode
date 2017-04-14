@@ -2,7 +2,6 @@ package com.example.machkonti.barcodescanningapp;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,11 +20,11 @@ import java.util.Date;
 import java.util.Locale;
 
 public class AddStock extends Activity {
-    TextView bCode;
-    EditText name;
-    EditText expire;
-    EditText daysAdvance;
-    Button addButton;
+    private TextView bCode;
+    private EditText name;
+    private EditText expire;
+    private EditText daysAdvance;
+    private Button addButton;
 
     private int year, month, day;
     private DatePickerDialog.OnDateSetListener mDatePickerListener = new DatePickerDialog.OnDateSetListener() {
@@ -59,7 +58,17 @@ public class AddStock extends Activity {
         expire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(10);
+                // showDialog(10);
+                final DatePickerDialog mDatePicker = new DatePickerDialog(AddStock.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        expire.setText(new StringBuilder().append(year).append("-").append(month + 1).append("-").append(dayOfMonth));
+//                        int month_k = month+1;
+                    }
+                }, year, month, day);
+                mDatePicker.setTitle("Expire Date");
+//                mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
+                mDatePicker.show();
             }
         });
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -98,14 +107,14 @@ public class AddStock extends Activity {
         });
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        if (id == 10) {
-            return new DatePickerDialog(this, mDatePickerListener, year, month, day);
-        }
-
-        return null;
-    }
+//    @Override
+//    protected Dialog onCreateDialog(int id) {
+//        if (id == 10) {
+//            return new DatePickerDialog(this, mDatePickerListener, year, month, day);
+//        }
+//
+//        return null;
+//    }
 
 
 }

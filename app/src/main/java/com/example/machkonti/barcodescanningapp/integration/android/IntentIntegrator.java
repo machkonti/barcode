@@ -25,12 +25,6 @@ import java.util.Map;
 
 public class IntentIntegrator {
 
-    public static final int REQUEST_CODE = 0x0000c0de; // Only use bottom 16 bits
-    public static final String DEFAULT_TITLE = "Install Barcode Scanner?";
-    public static final String DEFAULT_MESSAGE =
-            "This application requires Barcode Scanner. Would you like to install it?";
-    public static final String DEFAULT_YES = "Yes";
-    public static final String DEFAULT_NO = "No";
     // supported barcode formats
     public static final Collection<String> PRODUCT_CODE_TYPES = list("UPC_A", "UPC_E", "EAN_8", "EAN_13", "RSS_14");
     public static final Collection<String> ONE_D_CODE_TYPES =
@@ -38,12 +32,18 @@ public class IntentIntegrator {
                     "ITF", "RSS_14", "RSS_EXPANDED");
     public static final Collection<String> QR_CODE_TYPES = Collections.singleton("QR_CODE");
     public static final Collection<String> DATA_MATRIX_TYPES = Collections.singleton("DATA_MATRIX");
-    public static final Collection<String> ALL_CODE_TYPES = null;
+    private static final int REQUEST_CODE = 0x0000c0de; // Only use bottom 16 bits
+    private static final String DEFAULT_TITLE = "Install Barcode Scanner?";
+    private static final String DEFAULT_MESSAGE =
+            "This application requires Barcode Scanner. Would you like to install it?";
+    private static final String DEFAULT_YES = "Yes";
+    private static final String DEFAULT_NO = "No";
+    private static final Collection<String> ALL_CODE_TYPES = null;
     private static final String TAG = IntentIntegrator.class.getSimpleName();
     private static final String BS_PACKAGE = "com.google.zxing.client.android";
     public static final List<String> TARGET_BARCODE_SCANNER_ONLY = Collections.singletonList(BS_PACKAGE);
     private static final String BSPLUS_PACKAGE = "com.srowen.bs.android";
-    public static final List<String> TARGET_ALL_KNOWN = list(
+    private static final List<String> TARGET_ALL_KNOWN = list(
             BSPLUS_PACKAGE,             // Barcode Scanner+
             BSPLUS_PACKAGE + ".simple", // Barcode Scanner+ Simple
             BS_PACKAGE                  // Barcode Scanner
@@ -52,7 +52,7 @@ public class IntentIntegrator {
 
     private final Activity activity;
     private final Fragment fragment;
-    private final Map<String, Object> moreExtras = new HashMap<String, Object>(3);
+    private final Map<String, Object> moreExtras = new HashMap<>(3);
     private String title;
     private String message;
     private String buttonYes;
@@ -73,7 +73,7 @@ public class IntentIntegrator {
      *                 {@link #startActivityForResult(Intent, int)} will be called on the {@link Fragment} instead
      *                 of an {@link Activity}
      */
-    public IntentIntegrator(Fragment fragment) {
+    private IntentIntegrator(Fragment fragment) {
         this.activity = fragment.getActivity();
         this.fragment = fragment;
         initializeConfiguration();
@@ -247,7 +247,7 @@ public class IntentIntegrator {
      * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
      * if a prompt was needed, or null otherwise
      */
-    public final AlertDialog initiateScan(Collection<String> desiredBarcodeFormats, int cameraId) {
+    private final AlertDialog initiateScan(Collection<String> desiredBarcodeFormats, int cameraId) {
         Intent intentScan = new Intent(BS_PACKAGE + ".SCAN");
         intentScan.addCategory(Intent.CATEGORY_DEFAULT);
 
@@ -290,7 +290,7 @@ public class IntentIntegrator {
      * @see Activity#startActivityForResult(Intent, int)
      * @see Fragment#startActivityForResult(Intent, int)
      */
-    protected void startActivityForResult(Intent intent, int code) {
+    private void startActivityForResult(Intent intent, int code) {
         if (fragment == null) {
             activity.startActivityForResult(intent, code);
         } else {
@@ -366,7 +366,7 @@ public class IntentIntegrator {
      * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
      * if a prompt was needed, or null otherwise
      */
-    public final AlertDialog shareText(CharSequence text, CharSequence type) {
+    private final AlertDialog shareText(CharSequence text, CharSequence type) {
         Intent intent = new Intent();
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         intent.setAction(BS_PACKAGE + ".ENCODE");

@@ -1,7 +1,6 @@
 package com.example.machkonti.barcodescanningapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,8 +28,8 @@ import java.util.List;
 public class MainActivity extends Activity implements OnClickListener {
     private static final int ADD_ACTIVITY_REQUEST_CODE = 1;
     private static final int STOCK_DETAILS_ACTIVITY_REQUEST_CODE = 2;
-    List<Stocks> stocksArrayList;
-    ArrayAdapter<String> adapter;
+    private List<Stocks> stocksArrayList;
+    private ArrayAdapter<String> adapter;
     private TextView formatTxt, contentTxt;
     private String bCode;
     private SQLHelper sql;
@@ -54,7 +53,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private void displayStocksList() {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, makeList());
         stockList.setAdapter(adapter);
-        final Context context = this;
+//        final Context context = this;
         stockList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -81,7 +80,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
-            String scanContent = scanningResult.getContents();
+//            String scanContent = scanningResult.getContents();
 //            String scanFormat = scanningResult.getFormatName();
 
             this.bCode = scanningResult.getContents();
@@ -108,7 +107,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
     }
 
-    public void addBcodeDialot() {
+    private void addBcodeDialot() {
         AlertDialog.Builder ad = new AlertDialog.Builder(this);
         ad.setMessage("Not in database! Add id ?");
         ad.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -128,13 +127,13 @@ public class MainActivity extends Activity implements OnClickListener {
         ad.show();
     }
 
-    public void startAddActivity() {
+    private void startAddActivity() {
         Intent i = new Intent(this, AddStock.class);
         i.putExtra("bcode", bCode);
         this.startActivityForResult(i, ADD_ACTIVITY_REQUEST_CODE);
     }
 
-    public void startDetailsActivity(String bCode) {
+    private void startDetailsActivity(String bCode) {
         Intent detailedIntent = new Intent(this, StockDetails.class);
         Bundle b = new Bundle();
         b.putString("bcode", bCode);
