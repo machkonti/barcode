@@ -8,7 +8,6 @@ public class Stocks {
     private String name;
     private String bCode;
 
-
     public Stocks() {
     }
 

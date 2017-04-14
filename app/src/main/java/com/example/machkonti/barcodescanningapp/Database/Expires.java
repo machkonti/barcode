@@ -1,18 +1,16 @@
 package com.example.machkonti.barcodescanningapp.Database;
 
-import java.util.Date;
-
 /**
  * Created by Machkonti on 6.4.2017 г..
  */
 
 public class Expires {
     private String bCode;
-    //    private String expDate;
-    private Date expDate;
+    private String expDate;
+    //    private Date expDate;
     private int daysToNotice;
 
-    public Expires(String bCode, Date expDate, int daysToNotice) {
+    public Expires(String bCode, String expDate, int daysToNotice) {
         this.bCode = bCode;
         this.expDate = expDate;
         this.daysToNotice = daysToNotice;
@@ -35,11 +33,11 @@ public class Expires {
         this.bCode = bCode;
     }
 
-    public Date getExpDate() {
+    public String getExpDate() {
         return expDate;
     }
 
-    public void setExpDate(Date expDate) {
+    public void setExpDate(String expDate) {
         this.expDate = expDate;
     }
 

@@ -6,12 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by machkonti on 30.3.2017 г..
@@ -37,7 +34,7 @@ public class SQLHelper extends SQLiteOpenHelper {
             " ( " + s_bCode + " TEXT PRIMARY KEY," +
             s_name + " TEXT )";
     private static final String CRETE_TABLE_EXPIRE = "CREATE TABLE " + table_exprire +
-            " ( " + e_bCode + " TEXT , " + e_expire + " DATE, " + e_daysToNotice + " INTEGER )";
+            " ( " + e_bCode + " TEXT , " + e_expire + " TEXT, " + e_daysToNotice + " INTEGER )";
 
     public SQLHelper(Context context) {
         super(context, database_name, null, DATABASE_VERSION);
@@ -78,7 +75,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(e_bCode, e.getbCode());
-        values.put(e_expire, sf.format(e.getExpDate()));
+        values.put(e_expire, e.getExpDate());
         values.put(e_daysToNotice, e.getDaysToNotice());
 
         db.insert(table_stocks, null, values);
@@ -124,14 +121,14 @@ public class SQLHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(table_exprire, e_columns, e_bCode + "=?", new String[]{bCode}, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
-                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                Date d = null;
-                try {
-                    d = sf.parse(cursor.getString(1));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Expires e = new Expires(cursor.getString(0), d, Integer.parseInt(cursor.getString(2)));
+//                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+//                Date d = null;
+//                try {
+//                    d = sf.parse(cursor.getString(1));
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+                Expires e = new Expires(cursor.getString(0), cursor.getString(1), Integer.parseInt(cursor.getString(2)));
                 expires.add(e);
             } while (cursor.moveToNext());
         }
@@ -189,7 +186,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     public void deleteExpire(Expires e) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(table_exprire, s_bCode + "=? AND " + e_expire + "=?", new String[]{e.getbCode(), e.getExpDate().toString()});
+        db.delete(table_exprire, s_bCode + "=? AND " + e_expire + "=?", new String[]{e.getbCode(), e.getExpDate()});
         db.close();
     }
 
@@ -205,7 +202,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(e_bCode, e.getbCode());
-        cv.put(e_expire, String.valueOf(e.getExpDate()));
+        cv.put(e_expire, e.getExpDate());
         cv.put(e_daysToNotice, e.getDaysToNotice());
         return db.insert(table_exprire, null, cv);
     }

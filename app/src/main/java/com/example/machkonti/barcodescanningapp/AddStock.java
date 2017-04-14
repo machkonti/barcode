@@ -14,10 +14,7 @@ import com.example.machkonti.barcodescanningapp.Database.Expires;
 import com.example.machkonti.barcodescanningapp.Database.SQLHelper;
 import com.example.machkonti.barcodescanningapp.Database.Stocks;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class AddStock extends Activity {
     private TextView bCode;
@@ -82,16 +79,16 @@ public class AddStock extends Activity {
                 avans = daysAdvance.getText().toString();
 
                 Stocks st = new Stocks(bcode, namev);
-                SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                Date expDate = new Date();
+//                SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+//                Date expDate = new Date();
+//
+//                try {
+//                    expDate = sd.parse(exp);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
 
-                try {
-                    expDate = sd.parse(exp);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                Expires ex = new Expires(bcode, expDate, Integer.parseInt(avans));
+                Expires ex = new Expires(bcode, exp, Integer.parseInt(avans));
 
                 SQLHelper sqh = new SQLHelper(getApplicationContext());
                 if (sqh.insertStock(st) > 0) success = true;

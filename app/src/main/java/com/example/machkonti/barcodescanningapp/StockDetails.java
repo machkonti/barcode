@@ -17,6 +17,7 @@ import com.example.machkonti.barcodescanningapp.Database.SQLHelper;
 import com.example.machkonti.barcodescanningapp.Database.Stocks;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class StockDetails extends AppCompatActivity {
     private List<Expires> epxs;
     private Toolbar toolbar;
     private String bCode, name;
+
+    private ArrayAdapter<Expires> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,9 @@ public class StockDetails extends AppCompatActivity {
         bCodeView.setText(stock.getbCode());
         nameView.setText(stock.getName());
 
-        ArrayAdapter<Expires> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getEpxs(bCode));
+        epxs = getEpxs(bCode);
+
+        adapter = new ArrayAdapter<Expires>(StockDetails.this, android.R.layout.simple_list_item_1, epxs);
         expiresView.setAdapter(adapter);
 
         initToolBar();
@@ -91,9 +96,9 @@ public class StockDetails extends AppCompatActivity {
         );
     }
 
-    private List<Expires> getEpxs(String bCode) {
+    private ArrayList<Expires> getEpxs(String bCode) {
         SQLHelper db = new SQLHelper(this);
-        return db.getExpiresByBCode(bCode);
+        return (ArrayList<Expires>) db.getExpiresByBCode(bCode);
     }
 
     private Stocks getStock(String bCode) {
@@ -127,12 +132,21 @@ public class StockDetails extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 String ep = sd.format(expDate);
-                Expires e = new Expires(bCode, expDate, Integer.parseInt(av));
+                Expires e = new Expires(bCode, exp, Integer.parseInt(av));
 
                 SQLHelper db = new SQLHelper(StockDetails.this);
                 db.insertExpire(e);
-                ((ArrayAdapter) expiresView.getAdapter()).notifyDataSetChanged();
+//                epxs.add(e);
+//                adapter.notifyDataSetChanged();
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        epxs.clear();
+        epxs = getEpxs(bCode);
+        adapter.notifyDataSetChanged();
     }
 }
