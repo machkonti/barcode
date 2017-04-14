@@ -31,12 +31,10 @@ public class MainActivity extends Activity implements OnClickListener {
     private static final int STOCK_DETAILS_ACTIVITY_REQUEST_CODE = 2;
     List<Stocks> stocksArrayList;
     ArrayAdapter<String> adapter;
-    private Button scanBtn;
     private TextView formatTxt, contentTxt;
     private String bCode;
     private SQLHelper sql;
     private Stocks stock;
-    private Activity mActivity;
     private ListView stockList;
 
     @Override
@@ -44,11 +42,10 @@ public class MainActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        scanBtn = (Button)findViewById(R.id.scan_button);
+        Button scanBtn = (Button) findViewById(R.id.scan_button);
         stockList = (ListView) findViewById(R.id.stocks);
 
         scanBtn.setOnClickListener(this);
-        mActivity = this.getParent();
 
         displayStocksList();
 

@@ -17,14 +17,6 @@ import java.util.List;
 public class StockDetails extends Activity {
     private static final String TAG = StockDetails.class.getSimpleName();
 
-    private Toolbar toolbar;
-
-    private TextView bCodeView;
-    private TextView nameView;
-    private ListView expiresView;
-
-    private String bCode;
-    private Stocks stock;
     private List<Expires> epxs;
 
     @Override
@@ -32,16 +24,16 @@ public class StockDetails extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_details);
 
-        toolbar = (Toolbar) findViewById(R.id.my_toolbar1);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar1);
 
-        bCodeView = (TextView) findViewById(R.id.bCode);
-        nameView = (TextView) findViewById(R.id.name);
-        expiresView = (ListView) findViewById(R.id.expires);
+        TextView bCodeView = (TextView) findViewById(R.id.bCode);
+        TextView nameView = (TextView) findViewById(R.id.name);
+        ListView expiresView = (ListView) findViewById(R.id.expires);
 
         Bundle b = getIntent().getExtras();
-        this.bCode = b.get("bcode").toString();
+        String bCode = b.get("bcode").toString();
 
-        this.stock = getStock(bCode);
+        Stocks stock = getStock(bCode);
 
         bCodeView.setText(stock.getbCode());
         nameView.setText(stock.getName());
@@ -50,7 +42,6 @@ public class StockDetails extends Activity {
         expiresView.setAdapter(adapter);
 
         toolbar.setCollapsible(true);
-//        toolbar.setTitle(stock.getName());
 
     }
 

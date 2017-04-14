@@ -85,10 +85,18 @@ public class SQLHelper extends SQLiteOpenHelper {
     public Stocks getStock(String bCode) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(table_stocks, s_columns, s_bCode + "=?", new String[]{bCode}, null, null, null, null);
-        if(cursor == null) return null;
-        if(cursor.getCount() == 0) return null;
+        if (cursor == null) {
+            cursor.close();
+            return null;
+        }
+        if (cursor.getCount() == 0) {
+            cursor.close();
+            return null;
+        }
         cursor.moveToFirst();
-        return new Stocks(cursor.getString(0), cursor.getString(1));
+        Stocks st = new Stocks(cursor.getString(0), cursor.getString(1));
+        cursor.close();
+        return st;
     }
 
 
@@ -106,6 +114,7 @@ public class SQLHelper extends SQLiteOpenHelper {
             } while(cursor.moveToNext());
         }
 
+        cursor.close();
         return stocks;
     }
 
@@ -126,6 +135,8 @@ public class SQLHelper extends SQLiteOpenHelper {
                 expires.add(e);
             } while(cursor.moveToNext());
         }
+
+        cursor.close();
         return expires;
     }
 
@@ -142,16 +153,18 @@ public class SQLHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + table_exprire ;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-//        cursor.close();
-        return cursor.getCount();
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
     }
 
     public int getExpiresCountByBCode(String bCode) {
         String query = "SELECT * FROM " + table_exprire + " WHERE " + e_bCode + " = " + bCode;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-//        cursor.close();
-        return cursor.getCount();
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
     }
 
     public int updateStocks(Stocks s) {

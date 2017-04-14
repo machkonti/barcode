@@ -3,4 +3,10 @@
     <string name="scan">Scan</string>
     <string name="title_activity_stock_details">StockDetails</string>
     <string name="title_activity_add_stock">AddStock</string>
+    <string name="barcodeLabel">Barcode</string>
+    <string name="nameLabel">Name</string>
+    <string name="expireLabel">Expire Date</string>
+    <string name="avanseLabel">Days Avanse</string>
+    <string name="addBtnLabel">Add</string>
+    <string name="settings">Settings</string>
 </resources>

@@ -27,8 +27,6 @@ public class AddStock extends Activity {
     EditText daysAdvance;
     Button addButton;
 
-    private Calendar calendar;
-
     private int year, month, day;
     private DatePickerDialog.OnDateSetListener mDatePickerListener = new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -43,7 +41,7 @@ public class AddStock extends Activity {
         setContentView(R.layout.activity_add_stock);
 
 
-        calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
 
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
