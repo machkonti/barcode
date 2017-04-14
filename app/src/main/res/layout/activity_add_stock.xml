@@ -47,7 +47,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical|center"
-            android:labelFor="@id/name"
             android:text="@string/nameLabel" />
 
         <EditText
@@ -72,7 +71,6 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center"
-            android:labelFor="@id/expire"
             android:text="@string/expireLabel" />
 
         <EditText
@@ -98,7 +96,6 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center"
-            android:labelFor="@id/avans"
             android:text="@string/avanseLabel" />
 
         <EditText

@@ -66,7 +66,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.scan_button){
+        if (v.getId() == R.id.scan_button) {
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
         }
@@ -90,7 +90,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
             Stocks stock = getStock(this.bCode);
 
-            if(stock == null) {
+            if (stock == null) {
                 addBcodeDialot();
             } else {
                 startDetailsActivity(this.bCode);
@@ -111,7 +111,7 @@ public class MainActivity extends Activity implements OnClickListener {
     public void addBcodeDialot() {
         AlertDialog.Builder ad = new AlertDialog.Builder(this);
         ad.setMessage("Not in database! Add id ?");
-        ad.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+        ad.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 startAddActivity();
@@ -144,17 +144,16 @@ public class MainActivity extends Activity implements OnClickListener {
     }
 
 
-
     private List<String> makeList() {
         SQLHelper sqh = new SQLHelper(this);
         List<Stocks> stocks = sqh.getAllStocks();
         List<StocksWithExps> list = new ArrayList<>();
         List<String> rValue = new ArrayList<>();
-        for(int i = 0 ; i < stocks.size();i++) {
+        for (int i = 0; i < stocks.size(); i++) {
             Stocks s = stocks.get(i);
             List<Expires> te = sqh.getExpiresByBCode(s.getbCode());
 
-            StocksWithExps t = new StocksWithExps(s.getbCode(),s.getName(),te);
+            StocksWithExps t = new StocksWithExps(s.getbCode(), s.getName(), te);
             list.add(t);
             String sb = s.getName() + " :: " + s.getbCode();
             rValue.add(sb);

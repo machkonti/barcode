@@ -60,13 +60,12 @@ public class AddStock extends Activity {
             @Override
             public void onClick(View v) {
                 showDialog(10);
-                Toast.makeText(getApplicationContext(), "bg", Toast.LENGTH_SHORT).show();
             }
         });
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String bcode,namev,exp,avans;
+                String bcode, namev, exp, avans;
                 boolean success = false;
                 bcode = bCode.getText().toString();
                 namev = name.getText().toString();
@@ -83,13 +82,13 @@ public class AddStock extends Activity {
                     e.printStackTrace();
                 }
 
-                Expires ex = new Expires(bcode,expDate,Integer.parseInt(avans));
+                Expires ex = new Expires(bcode, expDate, Integer.parseInt(avans));
 
                 SQLHelper sqh = new SQLHelper(getApplicationContext());
-                if(sqh.insertStock(st)>0) success = true;
-                if(sqh.insertExpire(ex)>0) success = true;
+                if (sqh.insertStock(st) > 0) success = true;
+                if (sqh.insertExpire(ex) > 0) success = true;
 
-                if(!success) {
+                if (!success) {
                     Toast.makeText(AddStock.this, "Something met wrong !", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(AddStock.this, "Inserted !", Toast.LENGTH_SHORT).show();
@@ -101,8 +100,8 @@ public class AddStock extends Activity {
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        if(id == 10) {
-            return new DatePickerDialog(this,mDatePickerListener,year, month, day);
+        if (id == 10) {
+            return new DatePickerDialog(this, mDatePickerListener, year, month, day);
         }
 
         return null;

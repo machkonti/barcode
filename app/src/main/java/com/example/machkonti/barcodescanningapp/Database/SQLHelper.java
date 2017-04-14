@@ -31,8 +31,8 @@ public class SQLHelper extends SQLiteOpenHelper {
     private static final String e_expire = "expire";
     private static final String e_daysToNotice = "daysToNotice";
 
-    private static final String[] s_columns = {s_bCode,s_name};
-    private static final String[] e_columns = {e_bCode,e_expire,e_daysToNotice};
+    private static final String[] s_columns = {s_bCode, s_name};
+    private static final String[] e_columns = {e_bCode, e_expire, e_daysToNotice};
     private static final String CREATE_TABLE_STOCKS = "CREATE TABLE " + table_stocks +
             " ( " + s_bCode + " TEXT PRIMARY KEY," +
             s_name + " TEXT )";
@@ -64,21 +64,22 @@ public class SQLHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(s_bCode,s.getbCode());
-        values.put(s_name,s.getName());
+        values.put(s_bCode, s.getbCode());
+        values.put(s_name, s.getName());
 
-        db.insert(table_stocks,null, values);
+        db.insert(table_stocks, null, values);
         db.close();
     }
+
     public void createExpire(Expires e) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(e_bCode,e.getbCode());
-        values.put(e_expire,e.getExpDate().toString());
-        values.put(e_daysToNotice,e.getDaysToNotice());
+        values.put(e_bCode, e.getbCode());
+        values.put(e_expire, e.getExpDate().toString());
+        values.put(e_daysToNotice, e.getDaysToNotice());
 
-        db.insert(table_stocks,null, values);
+        db.insert(table_stocks, null, values);
         db.close();
     }
 
@@ -100,18 +101,17 @@ public class SQLHelper extends SQLiteOpenHelper {
     }
 
 
-
     public List<Stocks> getAllStocks() {
         List<Stocks> stocks = new ArrayList<>();
         String query = "SELECT * FROM " + table_stocks;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
-                Stocks s = new Stocks(cursor.getString(0),cursor.getString(1));
+                Stocks s = new Stocks(cursor.getString(0), cursor.getString(1));
                 stocks.add(s);
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 
         cursor.close();
@@ -121,8 +121,8 @@ public class SQLHelper extends SQLiteOpenHelper {
     public List<Expires> getExpiresByBCode(String bCode) {
         List<Expires> expires = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(table_exprire, e_columns, e_bCode + "=?", new String[]{bCode},null,null,null,null);
-        if(cursor.moveToFirst()) {
+        Cursor cursor = db.query(table_exprire, e_columns, e_bCode + "=?", new String[]{bCode}, null, null, null, null);
+        if (cursor.moveToFirst()) {
             do {
                 SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                 Date d = null;
@@ -131,9 +131,9 @@ public class SQLHelper extends SQLiteOpenHelper {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                Expires e = new Expires(cursor.getString(0),d,Integer.parseInt(cursor.getString(2)));
+                Expires e = new Expires(cursor.getString(0), d, Integer.parseInt(cursor.getString(2)));
                 expires.add(e);
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 
         cursor.close();
@@ -149,8 +149,9 @@ public class SQLHelper extends SQLiteOpenHelper {
         // return count
         return cursor.getCount();
     }
+
     public int getExpiresCount() {
-        String query = "SELECT * FROM " + table_exprire ;
+        String query = "SELECT * FROM " + table_exprire;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         int count = cursor.getCount();
@@ -171,24 +172,24 @@ public class SQLHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(s_name,s.getName());
-        values.put(s_bCode,s.getbCode());
+        values.put(s_name, s.getName());
+        values.put(s_bCode, s.getbCode());
 
         // updating row
         return db.update(table_stocks, values, s_bCode + " = ?",
-                new String[] { String.valueOf(s.getbCode()) });
+                new String[]{String.valueOf(s.getbCode())});
     }
 
     public void deleteStock(Stocks s) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(table_stocks, s_bCode + " = ?",
-                new String[] { s.getbCode() });
+                new String[]{s.getbCode()});
         db.close();
     }
 
     public void deleteExpire(Expires e) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(table_exprire, s_bCode + "=? AND " + e_expire + "=?", new String[] {e.getbCode(), e.getExpDate().toString()});
+        db.delete(table_exprire, s_bCode + "=? AND " + e_expire + "=?", new String[]{e.getbCode(), e.getExpDate().toString()});
         db.close();
     }
 
@@ -197,15 +198,16 @@ public class SQLHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(s_bCode, s.getbCode());
         contentValues.put(s_name, s.getName());
-        return db.insert(table_stocks,null,contentValues);
+        return db.insert(table_stocks, null, contentValues);
     }
+
     public long insertExpire(Expires e) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(e_bCode, e.getbCode());
         cv.put(e_expire, String.valueOf(e.getExpDate()));
         cv.put(e_daysToNotice, e.getDaysToNotice());
-        return db.insert(table_exprire, null,cv);
+        return db.insert(table_exprire, null, cv);
     }
 }
 

@@ -74,15 +74,15 @@ public class StocksWithExps {
 
         List<Expires> tmp = e;
 
-        for(int i = 0; i < tmp.size(); i++) {
+        for (int i = 0; i < tmp.size(); i++) {
             Expires t1 = tmp.get(i);
-            for(int u = 0; u<tmp.size();u++) {
-                long d1 = t1.getExpDate().getTime() - (t1.getDaysToNotice()*24*60*60);
-                long d2 = tmp.get(u).getExpDate().getTime() - (tmp.get(u).getDaysToNotice()*24*60*60);
-                if(d2 < d1) {
+            for (int u = 0; u < tmp.size(); u++) {
+                long d1 = t1.getExpDate().getTime() - (t1.getDaysToNotice() * 24 * 60 * 60);
+                long d2 = tmp.get(u).getExpDate().getTime() - (tmp.get(u).getDaysToNotice() * 24 * 60 * 60);
+                if (d2 < d1) {
                     Expires tu = tmp.get(u);
-                    tmp.set(u,t1);
-                    tmp.set(i,tu);
+                    tmp.set(u, t1);
+                    tmp.set(i, tu);
                 }
             }
         }

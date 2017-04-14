@@ -1,7 +1,5 @@
 package com.example.machkonti.barcodescanningapp.Database;
 
-import java.sql.Date;
-
 /**
  * Created by machkonti on 30.3.2017 г..
  */
@@ -11,7 +9,8 @@ public class Stocks {
     private String bCode;
 
 
-    public Stocks() {}
+    public Stocks() {
+    }
 
     public Stocks(String bCode, String name) {
         this.name = name;

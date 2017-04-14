@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Expires {
     private String bCode;
-//    private String expDate;
+    //    private String expDate;
     private Date expDate;
     private int daysToNotice;
 
