@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by machkonti on 30.3.2017 г..
@@ -69,7 +70,7 @@ public class SQLHelper extends SQLiteOpenHelper {
     }
 
     public void createExpire(Expires e) {
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         SQLiteDatabase db = this.getWritableDatabase();
 
