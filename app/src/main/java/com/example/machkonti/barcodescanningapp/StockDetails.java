@@ -51,7 +51,7 @@ public class StockDetails extends AppCompatActivity {
 
         epxs = getEpxs(bCode);
 
-        adapter = new ExpiresListAdapter(this, epxs, getResources());
+        adapter = new ExpiresListAdapter(this, getEpxs(bCode), getResources());
         expiresView.setAdapter(adapter);
 
         initToolBar();
@@ -97,7 +97,7 @@ public class StockDetails extends AppCompatActivity {
 
     private ArrayList<Expires> getEpxs(String bCode) {
         SQLHelper db = new SQLHelper(this);
-        return (ArrayList<Expires>) db.getExpiresByBCode(bCode);
+        return db.getExpiresByBCode(bCode);
     }
 
     private Stocks getStock(String bCode) {

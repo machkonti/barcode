@@ -6,9 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -116,26 +117,46 @@ public class SQLHelper extends SQLiteOpenHelper {
         return stocks;
     }
 
-    public List<Expires> getExpiresByBCode(String bCode) {
-        List<Expires> expires = new ArrayList<>();
+    public ArrayList<Expires> getExpiresByBCode(String bCode) {
+        ArrayList<Expires> expires = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(table_exprire, e_columns, e_bCode + "=?", new String[]{bCode}, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
-//                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-//                Date d = null;
-//                try {
-//                    d = sf.parse(cursor.getString(1));
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
                 Expires e = new Expires(cursor.getString(0), cursor.getString(1), Integer.parseInt(cursor.getString(2)));
                 expires.add(e);
             } while (cursor.moveToNext());
         }
 
         cursor.close();
+        try {
+            expires = sortExpires(expires);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return expires;
+    }
+
+    private ArrayList<Expires> sortExpires(ArrayList<Expires> list) throws ParseException {
+        Expires t;
+        long day = 24 * 60 * 60 * 1000;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        for (int i = 0; i < list.size(); i++) {
+            String[] d1 = list.get(i).getExpDate().split("-");
+            Date date1 = sdf.parse(d1[2] + "/" + d1[1] + "/" + d1[0]);
+            long daysLeft1 = (date1.getTime() / day) - list.get(i).getDaysToNotice();
+            for (int u = 1; u < list.size(); u++) {
+                String[] d2 = list.get(u).getExpDate().split("-");
+                Date date2 = sdf.parse(d2[2] + "/" + d2[1] + "/" + d2[0]);
+                long daysLeft2 = (date2.getTime() / day) - list.get(u).getDaysToNotice();
+                if (daysLeft1 > daysLeft2) {
+                    t = list.get(i);
+                    list.set(i, list.get(u));
+                    list.set(u, t);
+                }
+            }
+        }
+        return list;
     }
 
     public int getStocksCount() {

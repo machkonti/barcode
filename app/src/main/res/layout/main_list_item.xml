@@ -13,7 +13,7 @@
         android:textAlignment="center" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/nameLabel"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"

@@ -3,6 +3,8 @@ package com.example.machkonti.barcodescanningapp.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +16,10 @@ import com.example.machkonti.barcodescanningapp.Database.Expires;
 import com.example.machkonti.barcodescanningapp.R;
 import com.example.machkonti.barcodescanningapp.StockDetails;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Machkonti on 16.4.2017 г..
@@ -69,8 +74,8 @@ public class ExpiresListAdapter extends BaseAdapter implements View.OnClickListe
             vi = inflater.inflate(R.layout.expire_list_item, null);
 
             holder = new ViewHolder();
-            holder.daysAvans = (TextView) vi.findViewById(R.id.daysAvans);
-            holder.expireDate = (TextView) vi.findViewById(R.id.expireDate);
+            holder.daysAvans = (TextView) vi.findViewById(R.id.ela_daysAvans);
+            holder.expireDate = (TextView) vi.findViewById(R.id.ela_expireDate);
 
             vi.setTag(holder);
         } else {
@@ -84,10 +89,30 @@ public class ExpiresListAdapter extends BaseAdapter implements View.OnClickListe
             tmp = null;
             tmp = (Expires) list.get(position);
 
-            holder.expireDate.setText(tmp.getExpDate());
-            holder.daysAvans.setText(tmp.getDaysToNotice());
+            String[] dd = tmp.getExpDate().split("-");
+            String dateString = dd[2] + "/" + dd[1] + "/" + dd[0];
+
+            holder.expireDate.setText(dateString);
+            holder.daysAvans.setText(String.valueOf(tmp.getDaysToNotice()));
 
             vi.setOnClickListener(new OnItemClickListener(position));
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                Date date = sdf.parse(dateString);
+                long expDateLong = date.getTime();
+                long today = new Date().getTime();
+                long dif = (expDateLong - today) / (24 * 60 * 60 * 1000);
+
+                if (dif <= 0) {
+                    vi.setBackgroundColor(Color.RED);
+                    holder.daysAvans.setTypeface(null, Typeface.BOLD);
+                    holder.expireDate.setTypeface(null, Typeface.BOLD);
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         return vi;
     }

@@ -82,7 +82,7 @@ public class MainListAdapter extends BaseAdapter implements View.OnClickListener
             tmp = (Stocks) list.get(position);
 
             holder.bCodeLabel.setText(tmp.getbCode());
-//            holder.nameLabel.setText(tmp.getName());
+            holder.nameLabel.setText(tmp.getName());
 
             vi.setOnClickListener(new OnItemClickListener(position));
         }
