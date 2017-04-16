@@ -98,8 +98,8 @@ public class SQLHelper extends SQLiteOpenHelper {
     }
 
 
-    public List<Stocks> getAllStocks() {
-        List<Stocks> stocks = new ArrayList<>();
+    public ArrayList<Stocks> getAllStocks() {
+        ArrayList<Stocks> stocks = new ArrayList<>();
         String query = "SELECT * FROM " + table_stocks;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);

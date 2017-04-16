@@ -7,11 +7,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.machkonti.barcodescanningapp.Adapters.ExpiresListAdapter;
 import com.example.machkonti.barcodescanningapp.Database.Expires;
 import com.example.machkonti.barcodescanningapp.Database.SQLHelper;
 import com.example.machkonti.barcodescanningapp.Database.Stocks;
@@ -19,17 +19,16 @@ import com.example.machkonti.barcodescanningapp.Database.Stocks;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class StockDetails extends AppCompatActivity {
     private static final String TAG = StockDetails.class.getSimpleName();
 
     private ListView expiresView;
-    private List<Expires> epxs;
+    private ArrayList<Expires> epxs;
     private Toolbar toolbar;
     private String bCode, name;
 
-    private ArrayAdapter<Expires> adapter;
+    private ExpiresListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public class StockDetails extends AppCompatActivity {
 
         epxs = getEpxs(bCode);
 
-        adapter = new ArrayAdapter<Expires>(StockDetails.this, android.R.layout.simple_list_item_1, epxs);
+        adapter = new ExpiresListAdapter(this, epxs, getResources());
         expiresView.setAdapter(adapter);
 
         initToolBar();
@@ -148,5 +147,8 @@ public class StockDetails extends AppCompatActivity {
         epxs.clear();
         epxs = getEpxs(bCode);
         adapter.notifyDataSetChanged();
+    }
+
+    public void onItemClick(int position) {
     }
 }
