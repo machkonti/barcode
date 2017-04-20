@@ -1,4 +1,5 @@
 <resources>
+    <string name="banner_id">ca-app-pub-8775944520232965/5883480337</string>
     <string name="app_name">BarcodeScanningApp</string>
     <string name="scan">Scan</string>
     <string name="title_activity_stock_details">StockDetails</string>

@@ -10,6 +10,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.Calendar;
 
 public class AddExpire extends AppCompatActivity {
@@ -65,5 +68,9 @@ public class AddExpire extends AppCompatActivity {
                 finish();
             }
         });
+
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 }

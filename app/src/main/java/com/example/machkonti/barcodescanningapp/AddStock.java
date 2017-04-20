@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.example.machkonti.barcodescanningapp.Database.Expires;
 import com.example.machkonti.barcodescanningapp.Database.SQLHelper;
 import com.example.machkonti.barcodescanningapp.Database.Stocks;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.Calendar;
 
@@ -55,16 +57,15 @@ public class AddStock extends Activity {
         expire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // showDialog(10);
+
                 final DatePickerDialog mDatePicker = new DatePickerDialog(AddStock.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         expire.setText(new StringBuilder().append(year).append("-").append(month + 1).append("-").append(dayOfMonth));
-//                        int month_k = month+1;
+
                     }
                 }, year, month, day);
                 mDatePicker.setTitle("Expire Date");
-//                mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
                 mDatePicker.show();
             }
         });
@@ -79,14 +80,6 @@ public class AddStock extends Activity {
                 avans = daysAdvance.getText().toString();
 
                 Stocks st = new Stocks(bcode, namev);
-//                SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-//                Date expDate = new Date();
-//
-//                try {
-//                    expDate = sd.parse(exp);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
 
                 Expires ex = new Expires(bcode, exp, Integer.parseInt(avans));
 
@@ -102,16 +95,11 @@ public class AddStock extends Activity {
                 }
             }
         });
-    }
 
-//    @Override
-//    protected Dialog onCreateDialog(int id) {
-//        if (id == 10) {
-//            return new DatePickerDialog(this, mDatePickerListener, year, month, day);
-//        }
-//
-//        return null;
-//    }
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+    }
 
 
 }

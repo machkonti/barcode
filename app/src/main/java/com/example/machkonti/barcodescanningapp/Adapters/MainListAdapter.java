@@ -3,18 +3,25 @@ package com.example.machkonti.barcodescanningapp.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.machkonti.barcodescanningapp.Database.Expires;
+import com.example.machkonti.barcodescanningapp.Database.SQLHelper;
 import com.example.machkonti.barcodescanningapp.Database.Stocks;
 import com.example.machkonti.barcodescanningapp.MainActivity;
 import com.example.machkonti.barcodescanningapp.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by machkonti on 16.4.2017 г..
@@ -69,6 +76,7 @@ public class MainListAdapter extends BaseAdapter implements View.OnClickListener
             holder = new ViewHolder();
             holder.bCodeLabel = (TextView) vi.findViewById(R.id.bCodeLabel);
             holder.nameLabel = (TextView) vi.findViewById(R.id.nameLabel);
+            holder.delBtn = (Button) vi.findViewById(R.id.delBtn);
 
             vi.setTag(holder);
         } else {
@@ -81,10 +89,36 @@ public class MainListAdapter extends BaseAdapter implements View.OnClickListener
             tmp = null;
             tmp = (Stocks) list.get(position);
 
+            ArrayList<Expires> exps = new SQLHelper(activity.getApplicationContext()).getExpiresByBCode(tmp.getbCode());
+            String[] dd = exps.get(0).getExpDate().split("-");
+            String dateString = dd[2] + "/" + dd[1] + "/" + dd[0];
+
             holder.bCodeLabel.setText(tmp.getbCode());
             holder.nameLabel.setText(tmp.getName());
 
             vi.setOnClickListener(new OnItemClickListener(position));
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                Date date = sdf.parse(dateString);
+                long expDateLong = date.getTime();
+                long today = new Date().getTime();
+                long dif = (expDateLong - today) / (24 * 60 * 60 * 1000);
+
+                if (dif <= 0) {
+                    vi.setBackgroundColor(Color.RED);
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            holder.delBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
         return vi;
     }
@@ -92,6 +126,7 @@ public class MainListAdapter extends BaseAdapter implements View.OnClickListener
     public static class ViewHolder {
         public TextView bCodeLabel;
         public TextView nameLabel;
+        public Button delBtn;
     }
 
     private class OnItemClickListener implements View.OnClickListener {

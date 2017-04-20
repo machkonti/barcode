@@ -67,6 +67,7 @@ public class ExpiresListAdapter extends BaseAdapter implements View.OnClickListe
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         View vi = convertView;
         ViewHolder holder = new ViewHolder();
 
@@ -76,6 +77,8 @@ public class ExpiresListAdapter extends BaseAdapter implements View.OnClickListe
             holder = new ViewHolder();
             holder.daysAvans = (TextView) vi.findViewById(R.id.ela_daysAvans);
             holder.expireDate = (TextView) vi.findViewById(R.id.ela_expireDate);
+            holder.daysLeft = (TextView) vi.findViewById(R.id.ela_leftDays);
+
 
             vi.setTag(holder);
         } else {
@@ -104,6 +107,7 @@ public class ExpiresListAdapter extends BaseAdapter implements View.OnClickListe
                 long today = new Date().getTime();
                 long dif = (expDateLong - today) / (24 * 60 * 60 * 1000);
 
+                holder.daysLeft.setText("" + dif);
                 if (dif <= 0) {
                     vi.setBackgroundColor(Color.RED);
                     holder.daysAvans.setTypeface(null, Typeface.BOLD);
@@ -114,12 +118,15 @@ public class ExpiresListAdapter extends BaseAdapter implements View.OnClickListe
                 e.printStackTrace();
             }
         }
+
+
         return vi;
     }
 
     public static class ViewHolder {
         public TextView daysAvans;
         public TextView expireDate;
+        public TextView daysLeft;
     }
 
     private class OnItemClickListener implements View.OnClickListener {

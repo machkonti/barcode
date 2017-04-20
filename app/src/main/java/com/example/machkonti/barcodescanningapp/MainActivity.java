@@ -1,11 +1,12 @@
 package com.example.machkonti.barcodescanningapp;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,11 +20,13 @@ import com.example.machkonti.barcodescanningapp.Database.SQLHelper;
 import com.example.machkonti.barcodescanningapp.Database.Stocks;
 import com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator;
 import com.example.machkonti.barcodescanningapp.integration.android.IntentResult;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends AppCompatActivity implements OnClickListener {
     private static final int ADD_ACTIVITY_REQUEST_CODE = 1;
     private static final int STOCK_DETAILS_ACTIVITY_REQUEST_CODE = 2;
     public MainActivity mainActivity = null;
@@ -33,13 +36,14 @@ public class MainActivity extends Activity implements OnClickListener {
     private ListView stockList;
     private Resources res;
 
+    private Toolbar toolbar;
+
+    private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        SQLHelper sp = new SQLHelper(this);
-//        sp.onUpgrade(sp.getWritableDatabase(),2,2);
 
         mainActivity = this;
         res = getResources();
@@ -51,20 +55,17 @@ public class MainActivity extends Activity implements OnClickListener {
 
         displayStocksList();
 
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
     }
+
 
     private void displayStocksList() {
         makeList();
         adapter = new MainListAdapter(mainActivity, stocksArrayList, res);
         stockList.setAdapter(adapter);
-//        final Context context = this;
-//        stockList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Stocks s = stocksArrayList.get(position);
-//                startDetailsActivity(s.getbCode());
-//            }
-//        });
     }
 
     @Override
@@ -84,8 +85,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
-//            String scanContent = scanningResult.getContents();
-//            String scanFormat = scanningResult.getFormatName();
 
             this.bCode = scanningResult.getContents();
 
@@ -99,8 +98,6 @@ public class MainActivity extends Activity implements OnClickListener {
                 startDetailsActivity(this.bCode);
 
             }
-//            formatTxt.setText("FORMAT: " + scanFormat);
-//            contentTxt.setText("CONTENT: " + scanContent);
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
                     "No scan data received!", Toast.LENGTH_SHORT);
@@ -150,14 +147,11 @@ public class MainActivity extends Activity implements OnClickListener {
     private List<String> makeList() {
         SQLHelper sqh = new SQLHelper(this);
         ArrayList<Stocks> stocks = sqh.getAllStocks();
-//        List<StocksWithExps> list = new ArrayList<>();
         List<String> rValue = new ArrayList<>();
         for (int i = 0; i < stocks.size(); i++) {
             Stocks s = stocks.get(i);
             List<Expires> te = sqh.getExpiresByBCode(s.getbCode());
 
-//            StocksWithExps t = new StocksWithExps(s.getbCode(), s.getName(), te);
-//            list.add(t);
             String sb = s.getName() + " :: " + s.getbCode();
             rValue.add(sb);
         }
@@ -168,5 +162,14 @@ public class MainActivity extends Activity implements OnClickListener {
     public void onItemClick(int position) {
         Stocks s = stocksArrayList.get(position);
         startDetailsActivity(s.getbCode());
+    }
+
+    private void initToolBar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        toolbar.setCollapsible(true);
+
+
     }
 }

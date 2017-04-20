@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 
@@ -114,6 +116,34 @@ public class SQLHelper extends SQLiteOpenHelper {
         }
 
         cursor.close();
+
+        Collections.sort(stocks, new Comparator<Stocks>() {
+            @Override
+            public int compare(Stocks o1, Stocks o2) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String[] d1 = getExpiresByBCode(o1.getbCode()).get(0).getExpDate().split("-");
+                String[] d2 = getExpiresByBCode(o2.getbCode()).get(0).getExpDate().split("-");
+                Date date1 = null;
+                Date date2 = null;
+                try {
+                    date1 = sdf.parse(d1[2] + "/" + d1[1] + "/" + d1[0]);
+                    date2 = sdf.parse(d2[2] + "/" + d2[1] + "/" + d2[0]);
+
+                    if (date1.getTime() > date2.getTime()) {
+                        return 1;
+                    } else if (date1.getTime() < date2.getTime()) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                return 0;
+            }
+        });
+
         return stocks;
     }
 
@@ -129,34 +159,35 @@ public class SQLHelper extends SQLiteOpenHelper {
         }
 
         cursor.close();
-        try {
-            expires = sortExpires(expires);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return expires;
-    }
 
-    private ArrayList<Expires> sortExpires(ArrayList<Expires> list) throws ParseException {
-        Expires t;
-        long day = 24 * 60 * 60 * 1000;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        for (int i = 0; i < list.size(); i++) {
-            String[] d1 = list.get(i).getExpDate().split("-");
-            Date date1 = sdf.parse(d1[2] + "/" + d1[1] + "/" + d1[0]);
-            long daysLeft1 = (date1.getTime() / day) - list.get(i).getDaysToNotice();
-            for (int u = 1; u < list.size(); u++) {
-                String[] d2 = list.get(u).getExpDate().split("-");
-                Date date2 = sdf.parse(d2[2] + "/" + d2[1] + "/" + d2[0]);
-                long daysLeft2 = (date2.getTime() / day) - list.get(u).getDaysToNotice();
-                if (daysLeft1 > daysLeft2) {
-                    t = list.get(i);
-                    list.set(i, list.get(u));
-                    list.set(u, t);
+        Collections.sort(expires, new Comparator<Expires>() {
+            @Override
+            public int compare(Expires o1, Expires o2) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String[] d1 = o1.getExpDate().split("-");
+                String[] d2 = o2.getExpDate().split("-");
+
+                Date date1 = null;
+                Date date2 = null;
+                try {
+                    date1 = sdf.parse(d1[2] + "/" + d1[1] + "/" + d1[0]);
+                    date2 = sdf.parse(d2[2] + "/" + d2[1] + "/" + d2[0]);
+
+                    if (date1.getTime() > date2.getTime()) {
+                        return 1;
+                    } else if (date1.getTime() < date2.getTime()) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
+
+                return 0;
             }
-        }
-        return list;
+        });
+        return expires;
     }
 
     public int getStocksCount() {
