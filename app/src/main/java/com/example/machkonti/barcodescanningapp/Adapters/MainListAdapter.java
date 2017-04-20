@@ -78,6 +78,8 @@ public class MainListAdapter extends BaseAdapter implements View.OnClickListener
             holder.nameLabel = (TextView) vi.findViewById(R.id.nameLabel);
             holder.delBtn = (Button) vi.findViewById(R.id.delBtn);
 
+            holder.delBtn.setBackgroundColor(Color.RED);
+
             vi.setTag(holder);
         } else {
             holder = (ViewHolder) vi.getTag();

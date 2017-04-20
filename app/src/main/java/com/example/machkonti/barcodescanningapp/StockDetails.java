@@ -37,6 +37,8 @@ public class StockDetails extends AppCompatActivity {
     private ExpiresListAdapter adapter;
     private int p = 0;
 
+    private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +64,7 @@ public class StockDetails extends AppCompatActivity {
 
         initToolBar();
 
-        AdView mAdView = (AdView) findViewById(R.id.adView);
+        mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }

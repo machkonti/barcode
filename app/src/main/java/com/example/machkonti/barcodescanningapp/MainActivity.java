@@ -8,9 +8,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -45,13 +46,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initToolBar();
+
         mainActivity = this;
         res = getResources();
 
-        Button scanBtn = (Button) findViewById(R.id.scan_button);
+//        Button scanBtn = (Button) findViewById(R.id.scan_button);
         stockList = (ListView) findViewById(R.id.stocks);
 
-        scanBtn.setOnClickListener(this);
+//        scanBtn.setOnClickListener(this);
 
         displayStocksList();
 
@@ -70,10 +73,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.scan_button) {
-            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-            scanIntegrator.initiateScan();
-        }
+//        if (v.getId() == R.id.scan_button) {
+//            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+//            scanIntegrator.initiateScan();
+//        }
     }
 
     private Stocks getStock(String bCode) {
@@ -170,6 +173,26 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         toolbar.setCollapsible(true);
 
+        toolbar.inflateMenu(R.menu.main_activity_menu);
+        toolbar.collapseActionView();
+        toolbar.showOverflowMenu();
 
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.new_scan) {
+                    IntentIntegrator scanIntegrator = new IntentIntegrator(MainActivity.this);
+                    scanIntegrator.initiateScan();
+                }
+
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+        return true;
     }
 }
