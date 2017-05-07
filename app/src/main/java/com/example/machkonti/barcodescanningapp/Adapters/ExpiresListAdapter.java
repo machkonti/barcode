@@ -1,5 +1,6 @@
 package com.example.machkonti.barcodescanningapp.Adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -28,16 +29,14 @@ import java.util.Date;
 public class ExpiresListAdapter extends BaseAdapter implements View.OnClickListener {
 
     private static LayoutInflater inflater = null;
-    public Resources resources;
-    Expires tmp = null;
+    private final Activity activity;
+    private final ArrayList list;
     int i = 0;
-    private Activity activity;
-    private ArrayList list;
 
     public ExpiresListAdapter(Activity activity, ArrayList list, Resources resources) {
         this.activity = activity;
         this.list = list;
-        this.resources = resources;
+        Resources resources1 = resources;
 
         inflater = (LayoutInflater) this.activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -65,11 +64,12 @@ public class ExpiresListAdapter extends BaseAdapter implements View.OnClickListe
         return position;
     }
 
+    @SuppressLint({"InflateParams", "SetTextI18n"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View vi = convertView;
-        ViewHolder holder = new ViewHolder();
+        @SuppressWarnings("UnusedAssignment") ViewHolder holder = new ViewHolder();
 
         if (convertView == null) {
             vi = inflater.inflate(R.layout.expire_list_item, null);
@@ -89,7 +89,7 @@ public class ExpiresListAdapter extends BaseAdapter implements View.OnClickListe
             holder.daysAvans.setText("NO");
             holder.expireDate.setText("DATA");
         } else {
-            tmp = null;
+            Expires tmp = null;
             tmp = (Expires) list.get(position);
 
             String[] dd = tmp.getExpDate().split("-");
@@ -100,7 +100,7 @@ public class ExpiresListAdapter extends BaseAdapter implements View.OnClickListe
 
             vi.setOnClickListener(new OnItemClickListener(position));
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             try {
                 Date date = sdf.parse(dateString);
                 long expDateLong = date.getTime();
@@ -130,7 +130,7 @@ public class ExpiresListAdapter extends BaseAdapter implements View.OnClickListe
     }
 
     private class OnItemClickListener implements View.OnClickListener {
-        private int position;
+        private final int position;
 
         public OnItemClickListener(int position) {
             this.position = position;

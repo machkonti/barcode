@@ -1,5 +1,6 @@
 package com.example.machkonti.barcodescanningapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -27,17 +28,15 @@ import java.util.Date;
 
 public class StockDetails extends AppCompatActivity {
     private static final String TAG = StockDetails.class.getSimpleName();
+    @SuppressLint("SimpleDateFormat")
     private static final SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 
     private ListView expiresView;
     private ArrayList<Expires> epxs;
-    private Toolbar toolbar;
     private String bCode, name;
 
     private ExpiresListAdapter adapter;
     private int p = 0;
-
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +63,12 @@ public class StockDetails extends AppCompatActivity {
 
         initToolBar();
 
-        mAdView = (AdView) findViewById(R.id.adView);
+        AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
 
-    public void displayExpiresList() {
+    private void displayExpiresList() {
         if (this.epxs != null) {
             epxs.clear();
         }
@@ -80,7 +79,7 @@ public class StockDetails extends AppCompatActivity {
     }
 
     private void initToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Stock Details");
 
         setSupportActionBar(toolbar);

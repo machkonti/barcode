@@ -23,15 +23,16 @@ public class AddStock extends Activity {
     private EditText name;
     private EditText expire;
     private EditText daysAdvance;
-    private Button addButton;
 
     private int year, month, day;
+
     private DatePickerDialog.OnDateSetListener mDatePickerListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
             expire.setText(new StringBuilder().append(year).append("-").append(month + 1).append("-").append(dayOfMonth));
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class AddStock extends Activity {
         name = (EditText) findViewById(R.id.name);
         expire = (EditText) findViewById(R.id.expire);
         daysAdvance = (EditText) findViewById(R.id.avans);
-        addButton = (Button) findViewById(R.id.AddButton);
+        Button addButton = (Button) findViewById(R.id.AddButton);
 
         bCode.setText(this.getIntent().getStringExtra("bcode"));
 

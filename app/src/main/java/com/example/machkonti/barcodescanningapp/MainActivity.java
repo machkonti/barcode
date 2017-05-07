@@ -4,10 +4,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ActionMenuView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,50 +17,56 @@ import android.view.View.OnClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.machkonti.barcodescanningapp.Adapters.MainListAdapter;
+import com.example.machkonti.barcodescanningapp.Adapters.SellersAdapter;
 import com.example.machkonti.barcodescanningapp.Database.Expires;
 import com.example.machkonti.barcodescanningapp.Database.SQLHelper;
+import com.example.machkonti.barcodescanningapp.Database.Seller;
 import com.example.machkonti.barcodescanningapp.Database.Stocks;
+import com.example.machkonti.barcodescanningapp.Database.StocksWithExps;
 import com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator;
 import com.example.machkonti.barcodescanningapp.integration.android.IntentResult;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.appindexing.Action;
+import com.google.firebase.appindexing.FirebaseUserActions;
+import com.google.firebase.appindexing.builders.Actions;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnClickListener {
+public class MainActivity extends AppCompatActivity implements OnClickListener,
+        ShareActionProvider.OnShareTargetSelectedListener, ActionMenuView.OnMenuItemClickListener {
     private static final int ADD_ACTIVITY_REQUEST_CODE = 1;
     private static final int STOCK_DETAILS_ACTIVITY_REQUEST_CODE = 2;
-    public MainActivity mainActivity = null;
-    public MainListAdapter adapter = null;
+
+    private MainActivity mainActivity = null;
+    private ArrayList<Seller> sellersArrayList;
     private ArrayList<Stocks> stocksArrayList;
     private String bCode;
+
+    private ListView sellersListView;
     private ListView stockList;
     private Resources res;
 
-    private Toolbar toolbar;
-
-    private AdView mAdView;
+    private ShareActionProvider share = null;
+    private Intent shareIntent = new Intent(Intent.ACTION_SEND);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.sellers_list_view);
 
         initToolBar();
 
         mainActivity = this;
         res = getResources();
 
-//        Button scanBtn = (Button) findViewById(R.id.scan_button);
-        stockList = (ListView) findViewById(R.id.stocks);
-
-//        scanBtn.setOnClickListener(this);
+        sellersListView = (ListView) findViewById(R.id.sellers);
 
         displayStocksList();
 
-        mAdView = (AdView) findViewById(R.id.adView);
+        AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -67,16 +75,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     private void displayStocksList() {
         makeList();
-        adapter = new MainListAdapter(mainActivity, stocksArrayList, res);
-        stockList.setAdapter(adapter);
+        makeSellerList();
+        SellersAdapter adapter = new SellersAdapter(mainActivity, sellersArrayList, res);
+        sellersListView.setAdapter(adapter);
     }
 
     @Override
     public void onClick(View v) {
-//        if (v.getId() == R.id.scan_button) {
-//            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-//            scanIntegrator.initiateScan();
-//        }
     }
 
     private Stocks getStock(String bCode) {
@@ -89,17 +94,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
 
-            this.bCode = scanningResult.getContents();
+            if (scanningResult.getContents() != null) {
+                this.bCode = scanningResult.getContents();
 
-            Log.e("TAG :: ", scanningResult.toString());
+                Stocks stock = getStock(this.bCode);
 
-            Stocks stock = getStock(this.bCode);
+                if (stock == null) {
+                    addBcodeDialot();
+                } else {
+                    startDetailsActivity(this.bCode);
 
-            if (stock == null) {
-                addBcodeDialot();
-            } else {
-                startDetailsActivity(this.bCode);
-
+                }
             }
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -146,8 +151,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         startActivity(detailedIntent);
     }
 
+    private List<Seller> makeSellerList() {
+        SQLHelper sqh = new SQLHelper(this);
+        ArrayList<Seller> sellers = sqh.getAllSellers();
 
-    private List<String> makeList() {
+        this.sellersArrayList = sellers;
+        return sellers;
+    }
+
+    private List<Stocks> makeList() {
         SQLHelper sqh = new SQLHelper(this);
         ArrayList<Stocks> stocks = sqh.getAllStocks();
         List<String> rValue = new ArrayList<>();
@@ -159,7 +171,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             rValue.add(sb);
         }
         this.stocksArrayList = stocks;
-        return rValue;
+        return stocks;
+    }
+
+    private List<StocksWithExps> exportList() {
+        SQLHelper sqh = new SQLHelper(this);
+        ArrayList tmp = sqh.exportList();
+        return tmp;
     }
 
     public void onItemClick(int position) {
@@ -168,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     }
 
     private void initToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         toolbar.setCollapsible(true);
@@ -177,9 +195,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         toolbar.collapseActionView();
         toolbar.showOverflowMenu();
 
+
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+
                 if (item.getItemId() == R.id.new_scan) {
                     IntentIntegrator scanIntegrator = new IntentIntegrator(MainActivity.this);
                     scanIntegrator.initiateScan();
@@ -188,11 +208,74 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 return false;
             }
         });
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_menu, menu);
-        return true;
+
+        MenuItem shareitem = menu.findItem(R.id.menu_item_share);
+        share = (ShareActionProvider) MenuItemCompat.getActionProvider(shareitem);
+        share.setOnShareTargetSelectedListener(this);
+
+        shareitem.setEnabled(true);
+
+        shareitem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                Gson gson = new Gson();
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, gson.toJson(exportList()));
+                sendIntent.setType("text/plain");
+                startActivity(Intent.createChooser(sendIntent, "Share items"));
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
+        Toast.makeText(this, intent.getComponent().toString(),
+                Toast.LENGTH_LONG).show();
+
+        return (false);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        Toast.makeText(MainActivity.this, item.getTitle() + "menu item is clicked !!!", Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        return Actions.newView("Main", "http://[ENTER-YOUR-URL-HERE]");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        FirebaseUserActions.getInstance().start(getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        FirebaseUserActions.getInstance().end(getIndexApiAction());
+        super.onStop();
     }
 }

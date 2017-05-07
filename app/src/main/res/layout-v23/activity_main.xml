@@ -20,8 +20,7 @@
             android:layout_height="58dp"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-            android:titleTextColor="#ffffff"
-            tools:targetApi="m"></android.support.v7.widget.Toolbar>
+            android:titleTextColor="#ffffff"></android.support.v7.widget.Toolbar>
 
         <!--<Button-->
         <!--android:id="@+id/scan_button"-->

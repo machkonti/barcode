@@ -1,5 +1,6 @@
 package com.example.machkonti.barcodescanningapp.Database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -32,13 +34,28 @@ public class SQLHelper extends SQLiteOpenHelper {
     private static final String e_expire = "expire";
     private static final String e_daysToNotice = "daysToNotice";
 
+    private static final String table_sellers = "Sellers";
+    private static final String ss_id = "ID";
+    private static final String ss_name = "name";
+
+    private static final String table_combine = "Combiner";
+    private static final String c_seller_id = "seller_id";
+    private static final String c_bCode = "stock_bcode";
+
     private static final String[] s_columns = {s_bCode, s_name};
     private static final String[] e_columns = {e_bCode, e_expire, e_daysToNotice};
+    private static final String[] ss_coluns = {ss_id, ss_name};
+    private static final String[] c_columns = {c_seller_id, c_bCode};
+
     private static final String CREATE_TABLE_STOCKS = "CREATE TABLE " + table_stocks +
             " ( " + s_bCode + " TEXT PRIMARY KEY," +
             s_name + " TEXT )";
     private static final String CRETE_TABLE_EXPIRE = "CREATE TABLE " + table_exprire +
             " ( " + e_bCode + " TEXT , " + e_expire + " TEXT, " + e_daysToNotice + " INTEGER )";
+    private static final String CREATE_TABLE_SELLERS = "CREATE TABLE " + table_sellers +
+            " ( " + ss_id + " INTEGER PRIMARY KEY," + ss_name + " TEXT )";
+    private static final String CREATE_TABLE_COMBINE = "CREATE TABLE " + table_combine +
+            " ( " + c_seller_id + " INTEGER, " + c_bCode + " TEXT )";
 
     public SQLHelper(Context context) {
         super(context, database_name, null, DATABASE_VERSION);
@@ -52,13 +69,39 @@ public class SQLHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_STOCKS);
         db.execSQL(CRETE_TABLE_EXPIRE);
+        db.execSQL(CREATE_TABLE_SELLERS);
+        db.execSQL(CREATE_TABLE_COMBINE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + table_stocks);
         db.execSQL("DROP TABLE IF EXISTS " + table_exprire);
+        db.execSQL("DROP TABLE IF EXISTS " + table_sellers);
+        db.execSQL("DROP TABLE IF EXISTS " + table_combine);
         this.onCreate(db);
+    }
+
+    public void createSeller(Seller s) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.putNull(ss_id);
+        values.put(ss_name, s.getName());
+
+        db.insert(table_sellers, null, values);
+        db.close();
+    }
+
+    public void createCombine(Combine c) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(c_seller_id, c.seller_id);
+        values.put(c_bCode, c.bCode);
+
+        db.insert(table_combine, null, values);
+        db.close();
     }
 
     public void createStock(Stocks s) {
@@ -86,6 +129,52 @@ public class SQLHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public Seller getSeller(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(table_sellers, ss_coluns, ss_id + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
+        if (cursor == null) {
+            return null;
+        }
+        if (cursor.getCount() == 0) {
+            return null;
+        }
+
+        cursor.moveToFirst();
+        Seller seller = new Seller(cursor.getInt(0), cursor.getString(1));
+        cursor.close();
+        return seller;
+    }
+
+    public ArrayList<Seller> getAllSellers() {
+        ArrayList<Seller> sellers = new ArrayList<>();
+        String query = "SELECT * FROM " + table_sellers;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                sellers.add(new Seller(cursor.getInt(0), cursor.getString(1)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return sellers;
+    }
+
+    public ArrayList<Combine> getAllCombines() {
+        ArrayList<Combine> combines = new ArrayList<>();
+        String query = "SELECT * FROM " + table_combine;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                combines.add(new Combine(cursor.getInt(0), cursor.getString(1)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return combines;
+    }
+
     public Stocks getStock(String bCode) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(table_stocks, s_columns, s_bCode + "=?", new String[]{bCode}, null, null, null, null);
@@ -100,7 +189,6 @@ public class SQLHelper extends SQLiteOpenHelper {
         cursor.close();
         return st;
     }
-
 
     public ArrayList<Stocks> getAllStocks() {
         ArrayList<Stocks> stocks = new ArrayList<>();
@@ -120,7 +208,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         Collections.sort(stocks, new Comparator<Stocks>() {
             @Override
             public int compare(Stocks o1, Stocks o2) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 String[] d1 = getExpiresByBCode(o1.getbCode()).get(0).getExpDate().split("-");
                 String[] d2 = getExpiresByBCode(o2.getbCode()).get(0).getExpDate().split("-");
                 Date date1 = null;
@@ -147,6 +235,19 @@ public class SQLHelper extends SQLiteOpenHelper {
         return stocks;
     }
 
+    public ArrayList<Combine> getAllCombinesBySellerId(int id) {
+        ArrayList<Combine> combines = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(table_combine, c_columns, c_seller_id + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
+        if (c.moveToFirst()) {
+            do {
+                combines.add(new Combine(c.getInt(0), c.getString(1)));
+            } while (c.moveToNext());
+        }
+        c.close();
+        return combines;
+    }
+
     public ArrayList<Expires> getExpiresByBCode(String bCode) {
         ArrayList<Expires> expires = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -163,7 +264,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         Collections.sort(expires, new Comparator<Expires>() {
             @Override
             public int compare(Expires o1, Expires o2) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 String[] d1 = o1.getExpDate().split("-");
                 String[] d2 = o2.getExpDate().split("-");
 
@@ -258,6 +359,16 @@ public class SQLHelper extends SQLiteOpenHelper {
         cv.put(e_expire, e.getExpDate());
         cv.put(e_daysToNotice, e.getDaysToNotice());
         return db.insert(table_exprire, null, cv);
+    }
+
+    public ArrayList<StocksWithExps> exportList() {
+        ArrayList s = getAllStocks();
+        ArrayList<StocksWithExps> tmp = new ArrayList<>();
+        for (int i = 0; i < s.size(); i++) {
+            List<Expires> eps = getExpiresByBCode(((Stocks) s.get(i)).getbCode());
+            tmp.add(new StocksWithExps((Stocks) s.get(i), eps));
+        }
+        return tmp;
     }
 }
 
