@@ -13,12 +13,12 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/stock_toolbar"
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-            android:titleTextColor="#ffffff"></android.support.v7.widget.Toolbar>
+            android:titleTextColor="#ffffff" />
 
         <TextView
             android:id="@+id/name"

@@ -19,26 +19,19 @@ import com.google.android.gms.ads.AdView;
 import java.util.Calendar;
 
 public class AddStock extends Activity {
-    private TextView bCode;
-    private EditText name;
-    private EditText expire;
-    private EditText daysAdvance;
-
+    private ViewHolder holder = new ViewHolder();
     private int year, month, day;
-
     private DatePickerDialog.OnDateSetListener mDatePickerListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            expire.setText(new StringBuilder().append(year).append("-").append(month + 1).append("-").append(dayOfMonth));
+            holder.expire.setText(new StringBuilder().append(year).append("-").append(month + 1).append("-").append(dayOfMonth));
         }
     };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stock);
-
 
         Calendar calendar = Calendar.getInstance();
 
@@ -46,23 +39,23 @@ public class AddStock extends Activity {
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        bCode = (TextView) findViewById(R.id.bCode);
-        name = (EditText) findViewById(R.id.name);
-        expire = (EditText) findViewById(R.id.expire);
-        daysAdvance = (EditText) findViewById(R.id.avans);
+        holder.bCode = (TextView) findViewById(R.id.bCode);
+        holder.name = (EditText) findViewById(R.id.name);
+        holder.expire = (EditText) findViewById(R.id.expire);
+        holder.daysAdvance = (EditText) findViewById(R.id.avans);
         Button addButton = (Button) findViewById(R.id.AddButton);
 
-        bCode.setText(this.getIntent().getStringExtra("bcode"));
+        holder.bCode.setText(this.getIntent().getStringExtra("bcode"));
 
-        expire.setShowSoftInputOnFocus(false);
-        expire.setOnClickListener(new View.OnClickListener() {
+        holder.expire.setShowSoftInputOnFocus(false);
+        holder.expire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 final DatePickerDialog mDatePicker = new DatePickerDialog(AddStock.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        expire.setText(new StringBuilder().append(year).append("-").append(month + 1).append("-").append(dayOfMonth));
+                        holder.expire.setText(new StringBuilder().append(year).append("-").append(month + 1).append("-").append(dayOfMonth));
 
                     }
                 }, year, month, day);
@@ -75,10 +68,10 @@ public class AddStock extends Activity {
             public void onClick(View v) {
                 String bcode, namev, exp, avans;
                 boolean success = false;
-                bcode = bCode.getText().toString();
-                namev = name.getText().toString();
-                exp = expire.getText().toString();
-                avans = daysAdvance.getText().toString();
+                bcode = holder.bCode.getText().toString();
+                namev = holder.name.getText().toString();
+                exp = holder.expire.getText().toString();
+                avans = holder.daysAdvance.getText().toString();
 
                 Stocks st = new Stocks(bcode, namev);
 
@@ -100,6 +93,13 @@ public class AddStock extends Activity {
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+    }
+
+    private class ViewHolder {
+        TextView bCode;
+        EditText name;
+        EditText expire;
+        EditText daysAdvance;
     }
 
 

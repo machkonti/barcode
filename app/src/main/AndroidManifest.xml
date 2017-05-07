@@ -34,6 +34,7 @@
             android:name=".AddStock"
             android:label="@string/title_activity_add_stock" />
         <activity android:name=".AddExpire" />
+        <activity android:name=".AddSeller" />
 
     </application>
 

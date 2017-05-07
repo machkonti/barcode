@@ -3,7 +3,7 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.machkonti.barcodescanningapp.AddStock">
 
@@ -82,7 +82,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="date"
-            tools:ignore="NestedWeights" />
+            tools:ignore="LabelFor,NestedWeights" />
 
     </LinearLayout>
 
@@ -107,7 +107,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="numberSigned"
-            tools:ignore="NestedWeights" />
+            tools:ignore="LabelFor,NestedWeights" />
 
     </LinearLayout>
 
@@ -122,8 +122,13 @@
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="0dp"
+        android:textAlignment="gravity"
         android:visibility="visible"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_id"></com.google.android.gms.ads.AdView>
+        ads:adUnitId="@string/banner_id" />
 </LinearLayout>

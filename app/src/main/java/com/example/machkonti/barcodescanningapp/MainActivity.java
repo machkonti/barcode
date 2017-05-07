@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ActionMenuView;
@@ -30,7 +29,6 @@ import com.google.android.gms.ads.AdView;
 import com.google.firebase.appindexing.Action;
 import com.google.firebase.appindexing.FirebaseUserActions;
 import com.google.firebase.appindexing.builders.Actions;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -186,23 +184,22 @@ public class MainActivity extends AppCompatActivity implements OnClickListener,
     }
 
     private void initToolBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.sellers_toolbar);
+        toolbar.setTitle("Sellers");
         setSupportActionBar(toolbar);
 
         toolbar.setCollapsible(true);
-
-        toolbar.inflateMenu(R.menu.main_activity_menu);
+        toolbar.inflateMenu(R.menu.sellers_activity_menu);
         toolbar.collapseActionView();
         toolbar.showOverflowMenu();
-
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                if (item.getItemId() == R.id.new_scan) {
-                    IntentIntegrator scanIntegrator = new IntentIntegrator(MainActivity.this);
-                    scanIntegrator.initiateScan();
+                if (item.getItemId() == R.id.add_new_seller) {
+                    Intent i = new Intent(MainActivity.this, AddSeller.class);
+                    startActivityForResult(i, 1);
                 }
 
                 return false;
@@ -213,28 +210,28 @@ public class MainActivity extends AppCompatActivity implements OnClickListener,
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+        getMenuInflater().inflate(R.menu.sellers_activity_menu, menu);
 
-        MenuItem shareitem = menu.findItem(R.id.menu_item_share);
-        share = (ShareActionProvider) MenuItemCompat.getActionProvider(shareitem);
-        share.setOnShareTargetSelectedListener(this);
-
-        shareitem.setEnabled(true);
-
-        shareitem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                Gson gson = new Gson();
-
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, gson.toJson(exportList()));
-                sendIntent.setType("text/plain");
-                startActivity(Intent.createChooser(sendIntent, "Share items"));
-                return false;
-            }
-        });
+        MenuItem add_seller_button = menu.findItem(R.id.add_new_seller);
+//        share = (ShareActionProvider) MenuItemCompat.getActionProvider(shareitem);
+//        share.setOnShareTargetSelectedListener(this);
+//
+//        shareitem.setEnabled(true);
+//
+//        shareitem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//
+//                Gson gson = new Gson();
+//
+//                Intent sendIntent = new Intent();
+//                sendIntent.setAction(Intent.ACTION_SEND);
+//                sendIntent.putExtra(Intent.EXTRA_TEXT, gson.toJson(exportList()));
+//                sendIntent.setType("text/plain");
+//                startActivity(Intent.createChooser(sendIntent, "Share items"));
+//                return false;
+//            }
+//        });
 
         return super.onCreateOptionsMenu(menu);
     }

@@ -4,20 +4,23 @@
 
     <item
         android:id="@+id/new_scan"
-        android:actionLayout="@layout/toolbar"
         android:icon="@drawable/barcode"
         android:title="@string/settings"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/share_menu"
-        android:title="share">
+        android:icon="@android:drawable/ic_menu_share"
+        android:menuCategory="container"
+        android:title="@string/share"
+        app:showAsAction="ifRoom|collapseActionView">
         <menu>
             <item
                 android:id="@+id/menu_item_share"
                 android:icon="@android:drawable/ic_menu_share"
                 android:title="@string/share"
+                android:visible="true"
                 app:actionProviderClass="android.support.v7.widget.ShareActionProvider"
-                app:showAsAction="ifRoom" />
+                app:showAsAction="collapseActionView" />
         </menu>
     </item>
 </menu>

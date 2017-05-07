@@ -79,7 +79,7 @@ public class StockDetails extends AppCompatActivity {
     }
 
     private void initToolBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.stock_toolbar);
         toolbar.setTitle("Stock Details");
 
         setSupportActionBar(toolbar);
@@ -93,7 +93,7 @@ public class StockDetails extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(StockDetails.this, item.getItemId() + " clicking the toolbar!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(StockDetails.this, item.getItemId() + " clicking the st_toolbar!", Toast.LENGTH_SHORT).show();
 
                 if (item.getItemId() == R.id.add_new_expire) {
                     Intent i = new Intent(StockDetails.this, AddExpire.class);
@@ -111,7 +111,7 @@ public class StockDetails extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         finish();
-                        // Toast.makeText(StockDetails.this, v.getId() + " clicking the toolbar!", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(StockDetails.this, v.getId() + " clicking the st_toolbar!", Toast.LENGTH_SHORT).show();
                     }
                 }
         );

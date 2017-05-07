@@ -12,4 +12,7 @@
     <string name="delete_expire">Delete Expire ?</string>
     <string name="textview">TextView</string>
     <string name="share">Share</string>
+    <string name="sellers_toolbar_title">Sellers</string>
+    <string name="stocks_toolbar_title">Stocks</string>
+    <string name="add_seller_btn">Add Seller</string>
 </resources>

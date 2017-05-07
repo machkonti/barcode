@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/sellers_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:titleTextColor="#ffffff"
-        tools:targetApi="m" />
+        android:background="?android:attr/actionModeSplitBackground"
+        android:theme="@android:style/Theme.Light"
+        ads:popupTheme="@drawable/common_google_signin_btn_icon_dark_normal_background"
+        ads:titleTextColor="@android:color/holo_green_dark">
+
+    </android.support.v7.widget.Toolbar>
 
     <ListView
         android:id="@+id/sellers"
@@ -23,7 +24,7 @@
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="bottom|fill_horizontal"
         android:layout_weight="1"
         android:drawingCacheQuality="auto"
