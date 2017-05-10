@@ -35,7 +35,7 @@ public class StocksWithExps {
         this.exp = e;
     }
 
-    public StocksWithExps(String bCode, String name, List<Expires> exp) {
+    public StocksWithExps(Context context, String bCode, String name, List<Expires> exp) {
         this.bCode = bCode;
         this.name = name;
         this.exp = exp;

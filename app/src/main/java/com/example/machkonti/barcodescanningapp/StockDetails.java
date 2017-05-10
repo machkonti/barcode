@@ -112,7 +112,6 @@ public class StockDetails extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         finish();
-                        // Toast.makeText(StockDetails.this, v.getId() + " clicking the toolbar!", Toast.LENGTH_SHORT).show();
                     }
                 }
         );

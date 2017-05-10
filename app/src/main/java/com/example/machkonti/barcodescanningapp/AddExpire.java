@@ -38,16 +38,13 @@ public class AddExpire extends AppCompatActivity {
         exp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // showDialog(10);
                 final DatePickerDialog mDatePicker = new DatePickerDialog(AddExpire.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         exp.setText(new StringBuilder().append(year).append("-").append(month + 1).append("-").append(dayOfMonth));
-//                        int month_k = month+1;
                     }
                 }, year, month, day);
                 mDatePicker.setTitle("Expire Date");
-//                mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
                 mDatePicker.show();
             }
         });

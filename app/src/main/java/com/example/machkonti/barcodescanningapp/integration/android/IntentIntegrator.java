@@ -247,7 +247,7 @@ public class IntentIntegrator {
      * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
      * if a prompt was needed, or null otherwise
      */
-    private final AlertDialog initiateScan(Collection<String> desiredBarcodeFormats, int cameraId) {
+    private AlertDialog initiateScan(Collection<String> desiredBarcodeFormats, int cameraId) {
         Intent intentScan = new Intent(BS_PACKAGE + ".SCAN");
         intentScan.addCategory(Intent.CATEGORY_DEFAULT);
 
@@ -366,7 +366,7 @@ public class IntentIntegrator {
      * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
      * if a prompt was needed, or null otherwise
      */
-    private final AlertDialog shareText(CharSequence text, CharSequence type) {
+    private AlertDialog shareText(CharSequence text, CharSequence type) {
         Intent intent = new Intent();
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         intent.setAction(BS_PACKAGE + ".ENCODE");

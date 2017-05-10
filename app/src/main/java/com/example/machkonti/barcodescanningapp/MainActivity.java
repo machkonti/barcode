@@ -51,10 +51,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         mainActivity = this;
         res = getResources();
 
-//        Button scanBtn = (Button) findViewById(R.id.scan_button);
         stockList = (ListView) findViewById(R.id.stocks);
-
-//        scanBtn.setOnClickListener(this);
 
         displayStocksList();
 
@@ -73,10 +70,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-//        if (v.getId() == R.id.scan_button) {
-//            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-//            scanIntegrator.initiateScan();
-//        }
     }
 
     private Stocks getStock(String bCode) {

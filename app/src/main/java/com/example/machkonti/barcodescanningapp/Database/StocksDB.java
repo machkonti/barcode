@@ -4,7 +4,7 @@ package com.example.machkonti.barcodescanningapp.Database;
  * Created by machkonti on 30.3.2017 г..
  */
 
-public class StocksDB {
+class StocksDB {
     private int id;
     private String name;
     private String bCode;
