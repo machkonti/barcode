@@ -15,8 +15,8 @@ import android.widget.TextView;
 import com.example.machkonti.barcodescanningapp.Database.Expires;
 import com.example.machkonti.barcodescanningapp.Database.SQLHelper;
 import com.example.machkonti.barcodescanningapp.Database.Stocks;
-import com.example.machkonti.barcodescanningapp.MainActivity;
 import com.example.machkonti.barcodescanningapp.R;
+import com.example.machkonti.barcodescanningapp.SellerDetails;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -135,12 +135,16 @@ public class MainListAdapter extends BaseAdapter implements View.OnClickListener
         private int position;
 
         public OnItemClickListener(int position) {
+            Log.e(toString(), position + "");
+            Log.e(toString(), position + "");
+            Log.e(toString(), position + "");
+            Log.e(toString(), position + "");
             this.position = position;
         }
 
         @Override
         public void onClick(View v) {
-            MainActivity stc = (MainActivity) activity;
+            SellerDetails stc = (SellerDetails) activity;
             stc.onItemClick(position);
         }
     }

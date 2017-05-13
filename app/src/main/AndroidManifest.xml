@@ -13,23 +13,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-
+        <activity android:name=".SellersActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
                 <action android:name="com.google.firebase.AIzaSyDdj0wRiQNpBUj43PWYsLKFidp55dvzBJ0" />
             </intent-filter>
         </activity>
         <activity
             android:name=".StockDetails"
             android:label="@string/title_activity_stock_details" />
+        <activity android:name=".SellerDetails" />
         <activity
             android:name=".AddStock"
             android:label="@string/title_activity_add_stock" />
-        <activity android:name=".AddExpire"></activity>
+        <activity android:name=".AddExpire" />
+        <activity android:name=".AddSeller" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_sellers"
+            android:theme="@style/AppTheme">
 
+        </activity>
     </application>
 
 </manifest>

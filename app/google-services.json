@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "1016898791741",
+    "firebase_url": "https://barcodescanningapp-dbcdc.firebaseio.com",
+    "project_id": "barcodescanningapp-dbcdc",
+    "storage_bucket": "barcodescanningapp-dbcdc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016898791741:android:434c50d293064721",
+        "android_client_info": {
+          "package_name": "com.example.machkonti.barcodescanningapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016898791741-h90d5rmqf3ugajoi8pvo2bv0v2dip541.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.machkonti.barcodescanningapp",
+            "certificate_hash": "a7a569a1a8e914e4a0b9c45e6124883c911d2f86"
+          }
+        },
+        {
+          "client_id": "1016898791741-1qf12e89e62rd9vdq2r4cnsqmd849sb8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.machkonti.barcodescanningapp",
+            "certificate_hash": "8982fe44ec66d23d03340ae5bae731d2d4212d03"
+          }
+        },
+        {
+          "client_id": "1016898791741-16hfjmcuj99vq2aul2hi9a5q6cc5betk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu-ye4rHJOqKPHAckkYXVIyOM4SLICcMA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016898791741-16hfjmcuj99vq2aul2hi9a5q6cc5betk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

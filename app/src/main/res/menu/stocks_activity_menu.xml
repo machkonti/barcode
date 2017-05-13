@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/new_scan"
+        android:icon="@drawable/barcode"
+        android:title="@string/settings"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/share_menu"
+        android:icon="@android:drawable/ic_menu_share"
+        android:menuCategory="container"
+        android:title="@string/share"
+        app:showAsAction="ifRoom|collapseActionView">
+        <menu>
+            <item
+                android:id="@+id/menu_item_share"
+                android:icon="@android:drawable/ic_menu_share"
+                android:title="@string/share"
+                android:visible="true"
+                app:actionProviderClass="android.support.v7.widget.ShareActionProvider"
+                app:showAsAction="collapseActionView" />
+        </menu>
+    </item>
+</menu>
