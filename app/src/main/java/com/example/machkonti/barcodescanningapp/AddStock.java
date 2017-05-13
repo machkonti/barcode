@@ -14,12 +14,17 @@ import com.example.machkonti.barcodescanningapp.Database.Combine;
 import com.example.machkonti.barcodescanningapp.Database.Expires;
 import com.example.machkonti.barcodescanningapp.Database.SQLHelper;
 import com.example.machkonti.barcodescanningapp.Database.Stocks;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.NativeExpressAdView;
+import com.google.android.gms.ads.VideoController;
+import com.google.android.gms.ads.VideoOptions;
 
 import java.util.Calendar;
 
 public class AddStock extends Activity {
+    NativeExpressAdView mAdView;
+    VideoController mVideoController;
     private ViewHolder holder = new ViewHolder();
     private int year, month, day, sellerId;
     private String bCodeString;
@@ -95,9 +100,27 @@ public class AddStock extends Activity {
             }
         });
 
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView = (NativeExpressAdView) findViewById(R.id.adView);
+        mAdView.setVideoOptions(new VideoOptions.Builder()
+                .setStartMuted(true)
+                .build());
+        mVideoController = mAdView.getVideoController();
+        mVideoController.setVideoLifecycleCallbacks(new VideoController.VideoLifecycleCallbacks() {
+            @Override
+            public void onVideoEnd() {
+                super.onVideoEnd();
+            }
+        });
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                if (mVideoController.hasVideoContent()) {
+                } else {
+                }
+            }
+        });
+
+        mAdView.loadAd(new AdRequest.Builder().build());
     }
 
     class ViewHolder {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,4 +15,17 @@
         android:layout_height="495dp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:visibility="visible"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_id"
+        app:layout_constraintBottom_toBottomOf="@+id/sellers_list_view"
+        app:layout_constraintLeft_toLeftOf="@+id/sellers_list_view"
+        app:layout_constraintRight_toRightOf="@+id/sellers_list_view"
+        app:layout_constraintVertical_bias="0.029999971"></com.google.android.gms.ads.AdView>
 </android.support.constraint.ConstraintLayout>

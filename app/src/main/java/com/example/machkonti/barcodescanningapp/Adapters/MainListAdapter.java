@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.machkonti.barcodescanningapp.Database.Expires;
@@ -76,9 +75,6 @@ public class MainListAdapter extends BaseAdapter implements View.OnClickListener
             holder = new ViewHolder();
             holder.bCodeLabel = (TextView) vi.findViewById(R.id.bCodeLabel);
             holder.nameLabel = (TextView) vi.findViewById(R.id.nameLabel);
-            holder.delBtn = (Button) vi.findViewById(R.id.delBtn);
-
-            holder.delBtn.setBackgroundColor(Color.RED);
 
             vi.setTag(holder);
         } else {
@@ -115,12 +111,6 @@ public class MainListAdapter extends BaseAdapter implements View.OnClickListener
                 e.printStackTrace();
             }
 
-            holder.delBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
         }
         return vi;
     }
@@ -128,17 +118,12 @@ public class MainListAdapter extends BaseAdapter implements View.OnClickListener
     public static class ViewHolder {
         public TextView bCodeLabel;
         public TextView nameLabel;
-        public Button delBtn;
     }
 
     private class OnItemClickListener implements View.OnClickListener {
         private int position;
 
         public OnItemClickListener(int position) {
-            Log.e(toString(), position + "");
-            Log.e(toString(), position + "");
-            Log.e(toString(), position + "");
-            Log.e(toString(), position + "");
             this.position = position;
         }
 

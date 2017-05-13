@@ -22,7 +22,8 @@
             android:layout_gravity="center_vertical|center"
             android:layout_weight="1"
             android:gravity="center_vertical|center"
-            android:text="@string/barcodeLabel" />
+            android:text="@string/barcodeLabel"
+            tools:ignore="NestedWeights" />
 
         <TextView
             android:id="@+id/bCode"
@@ -48,7 +49,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical|center"
-            android:text="@string/nameLabel" />
+            android:text="@string/nameLabel"
+            tools:ignore="NestedWeights" />
 
         <EditText
             android:id="@+id/name"
@@ -56,7 +58,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
     </LinearLayout>
 
     <LinearLayout
@@ -80,7 +83,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="date" />
+            android:inputType="date"
+            tools:ignore="LabelFor,NestedWeights" />
 
     </LinearLayout>
 
@@ -105,7 +109,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="numberSigned" />
+            android:inputType="numberSigned"
+            tools:ignore="LabelFor,NestedWeights" />
 
     </LinearLayout>
 
@@ -117,13 +122,15 @@
         android:text="@string/addBtnLabel"
         android:visibility="visible" />
 
-    <com.google.android.gms.ads.AdView
+    <com.google.android.gms.ads.NativeExpressAdView
         android:id="@+id/adView"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:visibility="visible"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_id"></com.google.android.gms.ads.AdView>
+        android:layout_gravity="bottom|center_vertical|center_horizontal|center"
+        android:layout_weight="1"
+        ads:adSize="320x300"
+        ads:adUnitId="@string/native_banner"
+        tools:ignore="ObsoleteLayoutParam"></com.google.android.gms.ads.NativeExpressAdView>
 </LinearLayout>

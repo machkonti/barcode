@@ -20,6 +20,8 @@ import com.example.machkonti.barcodescanningapp.Database.Seller;
 import com.example.machkonti.barcodescanningapp.Database.Stocks;
 import com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator;
 import com.example.machkonti.barcodescanningapp.integration.android.IntentResult;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,8 @@ public class SellerDetails extends AppCompatActivity {
 
     private Resources res;
 
+    private AdView mAdView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +65,10 @@ public class SellerDetails extends AppCompatActivity {
         initToolbar(seller.getName());
 
         displayStocksList();
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     private void initToolbar(String name) {

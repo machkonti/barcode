@@ -20,7 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/add_seller_button"
@@ -37,5 +38,6 @@
         android:layout_gravity="bottom|center_vertical|center_horizontal|center"
         android:layout_weight="1"
         ads:adSize="320x300"
-        ads:adUnitId="@string/native_banner"></com.google.android.gms.ads.NativeExpressAdView>
+        ads:adUnitId="@string/native_banner"
+        tools:ignore="InefficientWeight,ObsoleteLayoutParam"></com.google.android.gms.ads.NativeExpressAdView>
 </LinearLayout>

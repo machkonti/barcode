@@ -10,12 +10,17 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.NativeExpressAdView;
+import com.google.android.gms.ads.VideoController;
+import com.google.android.gms.ads.VideoOptions;
 
 import java.util.Calendar;
 
 public class AddExpire extends AppCompatActivity {
+    NativeExpressAdView mAdView;
+    VideoController mVideoController;
     private int year, month, day;
 
     @Override
@@ -66,8 +71,26 @@ public class AddExpire extends AppCompatActivity {
             }
         });
 
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView = (NativeExpressAdView) findViewById(R.id.adView);
+        mAdView.setVideoOptions(new VideoOptions.Builder()
+                .setStartMuted(true)
+                .build());
+        mVideoController = mAdView.getVideoController();
+        mVideoController.setVideoLifecycleCallbacks(new VideoController.VideoLifecycleCallbacks() {
+            @Override
+            public void onVideoEnd() {
+                super.onVideoEnd();
+            }
+        });
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                if (mVideoController.hasVideoContent()) {
+                } else {
+                }
+            }
+        });
+
+        mAdView.loadAd(new AdRequest.Builder().build());
     }
 }
