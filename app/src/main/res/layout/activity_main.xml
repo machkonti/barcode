@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -21,7 +22,9 @@
             android:layout_height="58dp"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-            android:titleTextColor="#ffffff"></android.support.v7.widget.Toolbar>
+            android:theme="@style/AlertDialog.AppCompat"
+            android:titleTextColor="#ffffff"
+            tools:targetApi="m"></android.support.v7.widget.Toolbar>
 
         <!--<Button-->
         <!--android:id="@+id/scan_button"-->
@@ -37,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="15"
+            android:theme="@style/Platform.V21.AppCompat"
             android:visibility="visible" />
 
         <com.google.android.gms.ads.AdView

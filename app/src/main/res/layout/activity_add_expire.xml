@@ -17,22 +17,40 @@
 
         <TextView
             android:id="@+id/textView2"
+            style="@android:style/Widget.DeviceDefault.TextView"
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical|center"
             android:layout_weight="1"
             android:gravity="center_vertical|center"
+            android:inputType="none"
+            android:shadowColor="@color/common_google_signin_btn_text_dark_default"
+            android:shadowRadius="5"
+            android:singleLine="true"
             android:text="@string/barcodeLabel"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:theme="@style/AlertDialog.AppCompat"
             tools:ignore="NestedWeights" />
 
         <TextView
             android:id="@+id/bCode"
+            style="@android:style/Widget.DeviceDefault.TextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical|center"
+            android:inputType="none"
+            android:shadowColor="@color/common_google_signin_btn_text_dark_default"
+            android:shadowRadius="5"
+            android:singleLine="true"
             android:text="@string/barcodeLabel"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:theme="@style/AlertDialog.AppCompat" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,11 +63,20 @@
 
         <TextView
             android:id="@+id/nameLabel"
+            style="@android:style/Widget.DeviceDefault.TextView"
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical|center"
+            android:inputType="none"
+            android:shadowColor="@color/common_google_signin_btn_text_dark_default"
+            android:shadowRadius="5"
+            android:singleLine="true"
             android:text="@string/nameLabel"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:theme="@style/AlertDialog.AppCompat"
             tools:ignore="NestedWeights" />
 
         <TextView
@@ -57,8 +84,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
             android:ems="10"
             android:inputType="textPersonName"
+            android:theme="@style/AlertDialog.AppCompat"
             tools:ignore="TextViewEdits" />
     </LinearLayout>
 
@@ -72,16 +101,26 @@
 
         <TextView
             android:id="@+id/textView4"
+            style="@android:style/Widget.DeviceDefault.TextView"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center"
-            android:text="@string/expireLabel" />
+            android:inputType="none"
+            android:shadowColor="@color/common_google_signin_btn_text_dark_default"
+            android:shadowRadius="5"
+            android:singleLine="true"
+            android:text="@string/expireLabel"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:theme="@style/AlertDialog.AppCompat" />
 
         <EditText
             android:id="@+id/expire"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
             android:ems="10"
             android:inputType="date"
             tools:ignore="LabelFor,NestedWeights" />
@@ -98,29 +137,65 @@
 
         <TextView
             android:id="@+id/textView5"
+            style="@android:style/Widget.DeviceDefault.TextView"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center"
-            android:text="@string/avanseLabel" />
+            android:inputType="none"
+            android:shadowColor="@color/common_google_signin_btn_text_dark_default"
+            android:shadowRadius="5"
+            android:singleLine="true"
+            android:text="@string/avanseLabel"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:theme="@style/AlertDialog.AppCompat" />
 
         <EditText
             android:id="@+id/avans"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
             android:ems="10"
             android:inputType="numberSigned"
             tools:ignore="LabelFor,NestedWeights" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/AddButton"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.26"
-        android:text="@string/addBtnLabel"
-        android:visibility="visible" />
+        android:layout_height="match_parent"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_weight="0.58"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/AddButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:drawable/editbox_background_normal"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:text="@string/addBtnLabel"
+            android:visibility="visible"
+            tools:ignore="NestedWeights" />
+
+        <Button
+            android:id="@+id/cancel_button_expire"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:drawable/editbox_background_normal"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="@string/cancel"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:visibility="visible"
+            tools:ignore="ButtonOrder" />
+    </LinearLayout>
 
     <com.google.android.gms.ads.NativeExpressAdView
         android:id="@+id/adView"

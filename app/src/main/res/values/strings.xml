@@ -15,4 +15,5 @@
     <string name="title_activity_sellers">SellersActivity</string>
     <string name="add_seller_btn">Add Seller</string>
     <string name="native_banner">ca-app-pub-8775944520232965/3468287134</string>
+    <string name="cancel">Cancel</string>
 </resources>

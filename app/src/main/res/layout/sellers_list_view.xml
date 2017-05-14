@@ -9,9 +9,6 @@
         android:id="@+id/sellers_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/actionModeSplitBackground"
-        android:theme="@android:style/Theme.Light"
-        ads:popupTheme="@android:drawable/dialog_holo_light_frame"
         ads:titleTextColor="@android:color/holo_green_dark">
 
     </android.support.v7.widget.Toolbar>
@@ -19,18 +16,21 @@
     <ListView
         android:id="@+id/sellers"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:layout_weight="20"
+        android:visibility="visible" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|fill_horizontal"
         android:layout_weight="1"
         android:drawingCacheQuality="auto"
         android:keepScreenOn="true"
         android:labelFor="@+id/sellers"
         android:outlineProvider="background"
+        android:visibility="visible"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_id" />
 </LinearLayout>
