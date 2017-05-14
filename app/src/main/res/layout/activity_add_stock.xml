@@ -165,6 +165,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="bottom|center_vertical|center_horizontal|center"
         android:layout_weight="1"
+        android:isScrollContainer="true"
         ads:adSize="320x300"
         ads:adUnitId="@string/native_banner"
         tools:ignore="ObsoleteLayoutParam"></com.google.android.gms.ads.NativeExpressAdView>

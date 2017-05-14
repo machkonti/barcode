@@ -4,7 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_weight="1"
+    android:gravity="top"
+    android:orientation="vertical"
+    android:visibility="visible"
+    ads:layout_collapseMode="pin"
+    ads:layout_collapseParallaxMultiplier="0.0">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/add_seller_toolbar"
@@ -48,10 +53,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_marginTop="0dp"
+        android:layout_weight="0"
+        android:gravity="top|center_vertical|center_horizontal"
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <Button
             android:id="@+id/add_seller_button"
@@ -84,12 +93,23 @@
 
     <com.google.android.gms.ads.NativeExpressAdView
         android:id="@+id/adView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
         android:layout_gravity="bottom|center_vertical|center_horizontal|center"
         android:layout_weight="1"
+        android:addStatesFromChildren="false"
+        android:alwaysDrawnWithCache="false"
+        android:clipChildren="false"
+        android:fadeScrollbars="false"
+        android:forceHasOverlappingRendering="false"
+        android:isScrollContainer="true"
+        android:keepScreenOn="false"
+        android:layerType="none"
+        android:nestedScrollingEnabled="false"
+        android:outlineProvider="background"
+        android:overScrollMode="ifContentScrolls"
         ads:adSize="320x300"
         ads:adUnitId="@string/native_banner"
         tools:ignore="InefficientWeight,ObsoleteLayoutParam"></com.google.android.gms.ads.NativeExpressAdView>
