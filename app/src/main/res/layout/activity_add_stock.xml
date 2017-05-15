@@ -66,6 +66,7 @@
             android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
             android:ems="10"
             android:inputType="textPersonName"
+            android:textColor="@android:color/black"
             tools:ignore="LabelFor" />
     </LinearLayout>
 
@@ -94,6 +95,7 @@
             android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
             android:ems="10"
             android:inputType="date"
+            android:textColor="@android:color/black"
             tools:ignore="LabelFor,NestedWeights" />
 
     </LinearLayout>
@@ -123,6 +125,7 @@
             android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
             android:ems="10"
             android:inputType="numberSigned"
+            android:textColor="@android:color/black"
             tools:ignore="LabelFor,NestedWeights" />
 
     </LinearLayout>

@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 public class SellersActivity extends AppCompatActivity {
 
+    private static final int ADD_SELLER_REQUEST_CODE = 1;
+
     private ViewHolder holder = new ViewHolder();
     private ArrayList<Seller> sellerArrayList;
 
@@ -46,7 +48,7 @@ public class SellersActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(SellersActivity.this, AddSeller.class);
 
-                startActivityForResult(i, 1);
+                startActivityForResult(i, ADD_SELLER_REQUEST_CODE);
             }
         });
 
@@ -70,11 +72,17 @@ public class SellersActivity extends AppCompatActivity {
         return db.getAllSellers();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_SELLER_REQUEST_CODE) {
+            displaySellersList();
+        }
+    }
+
     class ViewHolder {
         Toolbar toolbar;
         FloatingActionButton fab;
         ListView sellersListView;
     }
-
-
 }
