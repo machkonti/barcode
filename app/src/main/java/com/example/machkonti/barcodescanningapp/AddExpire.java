@@ -22,6 +22,7 @@ public class AddExpire extends AppCompatActivity {
     NativeExpressAdView mAdView;
     VideoController mVideoController;
     private int year, month, day;
+    private ViewHolder holder = new ViewHolder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +37,17 @@ public class AddExpire extends AppCompatActivity {
         String bCode = getIntent().getStringExtra("bCode");
         String name = getIntent().getStringExtra("name");
 
-        TextView bCodeView = (TextView) findViewById(R.id.bCode);
-        TextView bNameView = (TextView) findViewById(R.id.name);
-        final EditText exp = (EditText) findViewById(R.id.expire);
+        holder.bCodeView = (TextView) findViewById(R.id.bCode);
+        holder.bNameView = (TextView) findViewById(R.id.name);
+        holder.exp = (EditText) findViewById(R.id.expire);
 
-        exp.setOnClickListener(new View.OnClickListener() {
+        holder.exp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final DatePickerDialog mDatePicker = new DatePickerDialog(AddExpire.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        exp.setText(new StringBuilder().append(year).append("-").append(month + 1).append("-").append(dayOfMonth));
+                        holder.exp.setText(new StringBuilder().append(year).append("-").append(month + 1).append("-").append(dayOfMonth));
                     }
                 }, year, month, day);
                 mDatePicker.setTitle("Expire Date");
@@ -54,20 +55,27 @@ public class AddExpire extends AppCompatActivity {
             }
         });
 
-        final EditText av = (EditText) findViewById(R.id.avans);
+        holder.av = (EditText) findViewById(R.id.avans);
 
-        bCodeView.setText(bCode);
-        bNameView.setText(name);
+        holder.bCodeView.setText(bCode);
+        holder.bNameView.setText(name);
 
-        Button addBtn = (Button) findViewById(R.id.AddButton);
-        addBtn.setOnClickListener(new View.OnClickListener() {
+        holder.addBtn = (Button) findViewById(R.id.AddButton);
+        holder.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
-                i.putExtra("exp", exp.getText().toString());
-                i.putExtra("av", av.getText().toString());
+                i.putExtra("exp", holder.exp.getText().toString());
+                i.putExtra("av", holder.av.getText().toString());
                 setResult(RESULT_OK, i);
                 finish();
+            }
+        });
+        holder.cancelBtn = (Button) findViewById(R.id.cancel_button_expire);
+        holder.cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAndRemoveTask();
             }
         });
 
@@ -92,5 +100,13 @@ public class AddExpire extends AppCompatActivity {
         });
 
         mAdView.loadAd(new AdRequest.Builder().build());
+    }
+
+    class ViewHolder {
+        TextView bCodeView;
+        TextView bNameView;
+        EditText exp;
+        EditText av;
+        Button addBtn, cancelBtn;
     }
 }

@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.machkonti.barcodescanningapp.Adapters.ExpiresListAdapter;
 import com.example.machkonti.barcodescanningapp.Database.Expires;
@@ -94,8 +93,6 @@ public class StockDetails extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(StockDetails.this, item.getItemId() + " clicking the toolbar!", Toast.LENGTH_SHORT).show();
-
                 if (item.getItemId() == R.id.add_new_expire) {
                     Intent i = new Intent(StockDetails.this, AddExpire.class);
                     i.putExtra("bCode", bCode);
