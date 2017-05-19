@@ -85,6 +85,7 @@ public class SellersAdapter extends BaseAdapter implements View.OnClickListener 
         return vi;
     }
 
+
     public static class ViewHolder {
         public TextView name;
     }

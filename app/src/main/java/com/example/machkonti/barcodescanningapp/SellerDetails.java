@@ -91,6 +91,9 @@ public class SellerDetails extends AppCompatActivity {
                     IntentIntegrator scanIntegrator = new IntentIntegrator(SellerDetails.this);
                     scanIntegrator.initiateScan();
                 }
+                if (item.getItemId() == R.id.menu_item_delete) {
+
+                }
                 return false;
             }
         });

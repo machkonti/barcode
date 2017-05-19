@@ -339,8 +339,11 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     public void deleteStock(Stocks s) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(table_stocks, s_bCode + "=?",
-                new String[]{s.getbCode()});
+        ArrayList<Expires> expires = this.getExpiresByBCode(s.getbCode());
+        for (int i = 0; i < expires.size(); i++) {
+            this.deleteExpire(expires.get(i));
+        }
+        db.delete(table_stocks, s_bCode + "=?", new String[]{s.getbCode()});
         db.close();
     }
 
@@ -352,15 +355,24 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     public void deleteSeller(Seller s) {
         SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<Combine> combines = this.getAllCombinesBySellerId(s.getId());
+        for (int i = 0; i < combines.size(); i++) {
+            this.deleteCombine(combines.get(i));
+        }
         db.delete(table_sellers, ss_id + "=?", new String[]{String.valueOf(s.getId())});
         db.close();
     }
 
     public void deleteCombine(Combine c) {
         SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<Stocks> stockses = this.getAllStocksBySeller(c.getSellerId());
+        for (int i = 0; i < stockses.size(); i++) {
+            this.deleteStock(stockses.get(i));
+        }
         db.delete(table_combine, c_seller_id + "=? AND " + c_bCode + "=?", new String[]{String.valueOf(c.getSellerId()), c.getbCode()});
         db.close();
     }
+
 
     public long insertStock(Stocks s) {
         SQLiteDatabase db = this.getWritableDatabase();
