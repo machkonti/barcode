@@ -88,29 +88,30 @@ public class MainListAdapter extends BaseAdapter implements View.OnClickListener
             tmp = (Stocks) list.get(position);
 
             ArrayList<Expires> exps = new SQLHelper(activity.getApplicationContext()).getExpiresByBCode(tmp.getbCode());
-            String[] dd = exps.get(0).getExpDate().split("-");
-            String dateString = dd[2] + "/" + dd[1] + "/" + dd[0];
+            if (exps.size() > 0) {
+                String[] dd = exps.get(0).getExpDate().split("-");
+                String dateString = dd[2] + "/" + dd[1] + "/" + dd[0];
 
-            holder.bCodeLabel.setText(tmp.getbCode());
-            holder.nameLabel.setText(tmp.getName());
+                holder.bCodeLabel.setText(tmp.getbCode());
+                holder.nameLabel.setText(tmp.getName());
 
-            vi.setOnClickListener(new OnItemClickListener(position));
+                vi.setOnClickListener(new OnItemClickListener(position));
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            try {
-                Date date = sdf.parse(dateString);
-                long expDateLong = date.getTime();
-                long today = new Date().getTime();
-                long dif = (expDateLong - today) / (24 * 60 * 60 * 1000);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    Date date = sdf.parse(dateString);
+                    long expDateLong = date.getTime();
+                    long today = new Date().getTime();
+                    long dif = (expDateLong - today) / (24 * 60 * 60 * 1000);
 
-                if (dif <= 0) {
-                    vi.setBackgroundColor(Color.RED);
+                    if (dif <= 0) {
+                        vi.setBackgroundColor(Color.RED);
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
-
         }
         return vi;
     }

@@ -32,7 +32,7 @@ public class SellersActivity extends AppCompatActivity {
         b.putInt("sellerid", id);
         detailedIntent.putExtras(b);
 
-        startActivity(detailedIntent);
+        startActivityForResult(detailedIntent, 0);
     }
 
     @Override
@@ -78,6 +78,7 @@ public class SellersActivity extends AppCompatActivity {
         if (requestCode == ADD_SELLER_REQUEST_CODE) {
             displaySellersList();
         }
+        displaySellersList();
     }
 
     class ViewHolder {

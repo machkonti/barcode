@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.machkonti.barcodescanningapp.Adapters.MainListAdapter;
+import com.example.machkonti.barcodescanningapp.Database.Combine;
 import com.example.machkonti.barcodescanningapp.Database.Expires;
 import com.example.machkonti.barcodescanningapp.Database.SQLHelper;
 import com.example.machkonti.barcodescanningapp.Database.Seller;
@@ -39,7 +40,7 @@ public class SellerDetails extends AppCompatActivity {
     private ArrayList<Stocks> stocksArrayList;
 
     private String bCode;
-
+    private Seller seller;
     private int sellerId;
     private int p = 0;
 
@@ -61,7 +62,7 @@ public class SellerDetails extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         sellerId = b.getInt("sellerid");
 
-        Seller seller = getSeller(sellerId);
+        this.seller = getSeller(sellerId);
 
         initToolbar(seller.getName());
 
@@ -92,7 +93,25 @@ public class SellerDetails extends AppCompatActivity {
                     scanIntegrator.initiateScan();
                 }
                 if (item.getItemId() == R.id.menu_item_delete) {
+                    AlertDialog.Builder ad = new AlertDialog.Builder(SellerDetails.this);
+                    ad.setMessage("Delete Seller - " + seller.getName() + " ?");
+                    ad.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // startAddActivity();
 
+                            deleteSeller(seller);
+                            dialog.dismiss();
+                            finishAndRemoveTask();
+                        }
+                    });
+                    ad.setNegativeButton("No!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    ad.show();
                 }
                 return false;
             }
@@ -107,6 +126,25 @@ public class SellerDetails extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void deleteSeller(Seller s) {
+        SQLHelper db = new SQLHelper(this);
+        ArrayList<Stocks> stockses = db.getAllStocksBySeller(s.getId());
+        for (int i = 0; i < stockses.size(); i++) {
+            ArrayList<Expires> expires = db.getExpiresByBCode(stockses.get(i).getbCode());
+            for (int o = 0; o < expires.size(); o++) {
+                db.deleteExpire(expires.get(o));
+            }
+            db.deleteStock(stockses.get(i));
+        }
+        ArrayList<Combine> combines = db.getAllCombinesBySellerId(s.getId());
+        for (int i = 0; i < combines.size(); i++) {
+            db.deleteCombine(combines.get(i));
+        }
+
+        db.deleteSeller(s);
+        db.close();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
