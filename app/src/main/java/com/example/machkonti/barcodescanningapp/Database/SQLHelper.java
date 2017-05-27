@@ -1,5 +1,6 @@
 package com.example.machkonti.barcodescanningapp.Database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -160,7 +161,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         Collections.sort(stocks, new Comparator<Stocks>() {
             @Override
             public int compare(Stocks o1, Stocks o2) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 String[] d1 = getExpiresByBCode(o1.getbCode()).get(0).getExpDate().split("-");
                 String[] d2 = getExpiresByBCode(o2.getbCode()).get(0).getExpDate().split("-");
                 Date date1 = null;
@@ -192,7 +193,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + table_combine + " c INNER JOIN " + table_stocks + " s " +
                 "ON c." + c_bCode + "=" + "s." + s_bCode + " WHERE c." + c_seller_id + "=?";
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(sellerId)});
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(sellerId)});
         if (cursor.moveToFirst()) {
             do {
                 stockses.add(new Stocks(cursor.getString(2), cursor.getString(3)));
@@ -230,7 +231,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         Collections.sort(expires, new Comparator<Expires>() {
             @Override
             public int compare(Expires o1, Expires o2) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 String[] d1 = o1.getExpDate().split("-");
                 String[] d2 = o2.getExpDate().split("-");
 

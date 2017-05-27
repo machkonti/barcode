@@ -1,7 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
-    <entry_points version="2.0" />
+    <entry_points version="2.0">
+      <entry_point TYPE="field" FQNAME="com.example.machkonti.barcodescanningapp.AddStock mDatePickerListener" />
+      <entry_point TYPE="field" FQNAME="com.example.machkonti.barcodescanningapp.MainActivity STOCK_DETAILS_ACTIVITY_REQUEST_CODE" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.MainActivity void onItemClick(int position)" />
+      <entry_point TYPE="implicit.constructor" FQNAME="com.example.machkonti.barcodescanningapp.AddExpire" />
+      <entry_point TYPE="implicit.constructor" FQNAME="com.example.machkonti.barcodescanningapp.AddSeller" />
+      <entry_point TYPE="implicit.constructor" FQNAME="com.example.machkonti.barcodescanningapp.AddStock" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.Expires void setDaysToNotice(int daysToNotice)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.Expires void setExpDate(java.lang.String expDate)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.Expires void setbCode(java.lang.String bCode)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.Expires Expires(java.lang.String bCode, java.lang.String expDate, int daysToNotice)" />
+      <entry_point TYPE="class" FQNAME="com.example.machkonti.barcodescanningapp.Database.Expires" />
+      <entry_point TYPE="field" FQNAME="com.example.machkonti.barcodescanningapp.Adapters.ExpiresListAdapter i" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Adapters.ExpiresListAdapter ExpiresListAdapter(android.app.Activity activity, java.util.ArrayList list, android.content.res.Resources resources)" />
+      <entry_point TYPE="class" FQNAME="com.example.machkonti.barcodescanningapp.Adapters.ExpiresListAdapter" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator android.support.v7.app.AlertDialog shareText(java.lang.CharSequence text)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator android.support.v7.app.AlertDialog initiateScan(java.util.Collection&lt;java.lang.String&gt; desiredBarcodeFormats)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator android.support.v7.app.AlertDialog initiateScan(int cameraId)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator void addExtra(java.lang.String key, java.lang.Object value)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator java.util.Map&lt;java.lang.String,?&gt; getMoreExtras()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator void setSingleTargetApplication(java.lang.String targetApplication)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator void setTargetApplications(java.util.List&lt;java.lang.String&gt; targetApplications)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator java.util.Collection&lt;java.lang.String&gt; getTargetApplications()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator void setButtonNoByID(int buttonNoID)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator void setButtonNo(java.lang.String buttonNo)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator java.lang.String getButtonNo()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator void setButtonYesByID(int buttonYesID)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator void setButtonYes(java.lang.String buttonYes)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator java.lang.String getButtonYes()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator void setMessageByID(int messageID)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator void setMessage(java.lang.String message)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator java.lang.String getMessage()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator void setTitleByID(int titleID)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator void setTitle(java.lang.String title)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator java.lang.String getTitle()" />
+      <entry_point TYPE="field" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator TARGET_BARCODE_SCANNER_ONLY" />
+      <entry_point TYPE="field" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator DATA_MATRIX_TYPES" />
+      <entry_point TYPE="field" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator QR_CODE_TYPES" />
+      <entry_point TYPE="field" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator ONE_D_CODE_TYPES" />
+      <entry_point TYPE="field" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator PRODUCT_CODE_TYPES" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator IntentIntegrator(android.app.Activity activity)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator IntentIntegrator(android.support.v4.app.Fragment fragment)" />
+      <entry_point TYPE="class" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentIntegrator" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentResult java.lang.String getErrorCorrectionLevel()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentResult java.lang.Integer getOrientation()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentResult byte[] getRawBytes()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentResult java.lang.String getFormatName()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentResult IntentResult()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentResult IntentResult(java.lang.String contents, java.lang.String formatName, byte[] rawBytes, java.lang.Integer orientation, java.lang.String errorCorrectionLevel)" />
+      <entry_point TYPE="class" FQNAME="com.example.machkonti.barcodescanningapp.integration.android.IntentResult" />
+      <entry_point TYPE="implicit.constructor" FQNAME="com.example.machkonti.barcodescanningapp.MainActivity" />
+      <entry_point TYPE="field" FQNAME="com.example.machkonti.barcodescanningapp.Adapters.MainListAdapter i" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Adapters.MainListAdapter MainListAdapter(android.app.Activity activity, java.util.ArrayList list, android.content.res.Resources resources)" />
+      <entry_point TYPE="class" FQNAME="com.example.machkonti.barcodescanningapp.Adapters.MainListAdapter" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.SQLHelper int updateStocks(com.example.machkonti.barcodescanningapp.Database.Stocks s)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.SQLHelper int updateSeller(com.example.machkonti.barcodescanningapp.Database.Seller s)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.SQLHelper int getExpiresCountByBCode(java.lang.String bCode)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.SQLHelper int getExpiresCount()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.SQLHelper int getStocksCount()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.SQLHelper int getCombinesCountBySellerId(int id)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.SQLHelper int getCombinesCount()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.SQLHelper int getSellersCount()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.SQLHelper java.util.ArrayList&lt;com.example.machkonti.barcodescanningapp.Database.Combine&gt; getAllCombines()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.SQLHelper SQLHelper(android.content.Context context, java.lang.String name, android.database.sqlite.SQLiteDatabase.CursorFactory factory, int version)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.SQLHelper SQLHelper(android.content.Context context)" />
+      <entry_point TYPE="class" FQNAME="com.example.machkonti.barcodescanningapp.Database.SQLHelper" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.Seller void setId(int id)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.Seller Seller(java.lang.String name)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.Seller Seller()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.Seller Seller(int id, java.lang.String name)" />
+      <entry_point TYPE="class" FQNAME="com.example.machkonti.barcodescanningapp.Database.Seller" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.SellerDetails java.util.List&lt;com.example.machkonti.barcodescanningapp.Database.Stocks&gt; makeList()" />
+      <entry_point TYPE="field" FQNAME="com.example.machkonti.barcodescanningapp.SellerDetails p" />
+      <entry_point TYPE="field" FQNAME="com.example.machkonti.barcodescanningapp.SellerDetails TAG" />
+      <entry_point TYPE="implicit.constructor" FQNAME="com.example.machkonti.barcodescanningapp.SellerDetails" />
+      <entry_point TYPE="implicit.constructor" FQNAME="com.example.machkonti.barcodescanningapp.SellersActivity" />
+      <entry_point TYPE="field" FQNAME="com.example.machkonti.barcodescanningapp.Adapters.SellersAdapter i" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Adapters.SellersAdapter SellersAdapter(android.app.Activity activity, java.util.ArrayList list, android.content.res.Resources resources)" />
+      <entry_point TYPE="class" FQNAME="com.example.machkonti.barcodescanningapp.Adapters.SellersAdapter" />
+      <entry_point TYPE="field" FQNAME="com.example.machkonti.barcodescanningapp.StockDetails TAG" />
+      <entry_point TYPE="implicit.constructor" FQNAME="com.example.machkonti.barcodescanningapp.StockDetails" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.Stocks void setbCode(java.lang.String bCode)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.Stocks void setName(java.lang.String name)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.Stocks Stocks()" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.Stocks Stocks(java.lang.String bCode, java.lang.String name)" />
+      <entry_point TYPE="class" FQNAME="com.example.machkonti.barcodescanningapp.Database.Stocks" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.StocksDB StocksDB(int id, java.lang.String name, java.lang.String bCode, java.lang.String expire, int timeToNotice)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.StocksDB StocksDB()" />
+      <entry_point TYPE="class" FQNAME="com.example.machkonti.barcodescanningapp.Database.StocksDB" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.StocksWithExps StocksWithExps(android.content.Context context, java.lang.String bCode, java.lang.String name, java.util.List&lt;com.example.machkonti.barcodescanningapp.Database.Expires&gt; exp)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.StocksWithExps StocksWithExps(com.example.machkonti.barcodescanningapp.Database.Stocks s, java.util.List&lt;com.example.machkonti.barcodescanningapp.Database.Expires&gt; e)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.StocksWithExps StocksWithExps(android.content.Context context, java.lang.String bCode)" />
+      <entry_point TYPE="method" FQNAME="com.example.machkonti.barcodescanningapp.Database.StocksWithExps StocksWithExps()" />
+      <entry_point TYPE="class" FQNAME="com.example.machkonti.barcodescanningapp.Database.StocksWithExps" />
+    </entry_points>
   </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />

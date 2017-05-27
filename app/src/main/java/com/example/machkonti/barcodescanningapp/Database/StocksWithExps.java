@@ -13,7 +13,7 @@ import java.util.Locale;
  * Created by Machkonti on 7.4.2017 г..
  */
 
-public class StocksWithExps {
+class StocksWithExps {
     private String bCode;
     private String name;
     private List<Expires> exp;

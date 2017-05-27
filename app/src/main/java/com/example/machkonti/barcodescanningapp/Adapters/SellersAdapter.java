@@ -1,5 +1,6 @@
 package com.example.machkonti.barcodescanningapp.Adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -24,14 +25,12 @@ public class SellersAdapter extends BaseAdapter implements View.OnClickListener 
 
     private static LayoutInflater inflater = null;
     private final Activity activity;
+    private final ArrayList list;
     int i = 0;
-    private ArrayList list;
-    private Resources resources;
 
     public SellersAdapter(Activity activity, ArrayList list, Resources resources) {
         this.activity = activity;
         this.list = list;
-        this.resources = resources;
 
         inflater = (LayoutInflater) this.activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -57,6 +56,7 @@ public class SellersAdapter extends BaseAdapter implements View.OnClickListener 
         return position;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;

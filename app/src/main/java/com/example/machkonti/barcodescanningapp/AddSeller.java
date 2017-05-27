@@ -22,10 +22,9 @@ import com.google.android.gms.ads.VideoOptions;
  */
 
 public class AddSeller extends AppCompatActivity {
-    private static String LOG_TAG = "EXAMPLE";
-    NativeExpressAdView mAdView;
-    VideoController mVideoController;
-    private ViewHolder holder = new ViewHolder();
+    private static final String LOG_TAG = "EXAMPLE";
+    private final ViewHolder holder = new ViewHolder();
+    private VideoController mVideoController;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class AddSeller extends AppCompatActivity {
             }
         });
 
-        mAdView = (NativeExpressAdView) findViewById(R.id.adView);
+        NativeExpressAdView mAdView = (NativeExpressAdView) findViewById(R.id.adView);
         mAdView.setVideoOptions(new VideoOptions.Builder()
                 .setStartMuted(true)
                 .build());

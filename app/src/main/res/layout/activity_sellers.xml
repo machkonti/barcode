@@ -37,6 +37,7 @@
         app:fabSize="normal"
         app:rippleColor="@android:color/holo_red_dark"
         app:srcCompat="@drawable/plus"
-        app:useCompatPadding="false" />
+        app:useCompatPadding="false"
+        tools:ignore="RtlSymmetry" />
 
 </android.support.design.widget.CoordinatorLayout>

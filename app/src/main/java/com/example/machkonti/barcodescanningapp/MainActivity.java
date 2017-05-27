@@ -30,16 +30,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements OnClickListener {
     private static final int ADD_ACTIVITY_REQUEST_CODE = 1;
     private static final int STOCK_DETAILS_ACTIVITY_REQUEST_CODE = 2;
-    public MainActivity mainActivity = null;
-    public MainListAdapter adapter = null;
+    private MainActivity mainActivity = null;
     private ArrayList<Stocks> stocksArrayList;
     private String bCode;
     private ListView stockList;
     private Resources res;
-
-    private Toolbar toolbar;
-
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         displayStocksList();
 
-        mAdView = (AdView) findViewById(R.id.adView);
+        AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -64,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     private void displayStocksList() {
         makeList();
-        adapter = new MainListAdapter(mainActivity, stocksArrayList, res);
+        MainListAdapter adapter = new MainListAdapter(mainActivity, stocksArrayList, res);
         stockList.setAdapter(adapter);
     }
 
@@ -140,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     }
 
 
+    @SuppressWarnings("UnusedReturnValue")
     private List<String> makeList() {
         SQLHelper sqh = new SQLHelper(this);
         ArrayList<Stocks> stocks = sqh.getAllStocks();
@@ -161,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     }
 
     private void initToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         toolbar.setCollapsible(true);

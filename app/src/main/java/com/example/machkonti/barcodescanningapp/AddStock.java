@@ -23,9 +23,8 @@ import com.google.android.gms.ads.VideoOptions;
 import java.util.Calendar;
 
 public class AddStock extends Activity {
-    NativeExpressAdView mAdView;
-    VideoController mVideoController;
-    private ViewHolder holder = new ViewHolder();
+    private final ViewHolder holder = new ViewHolder();
+    private VideoController mVideoController;
     private int year, month, day, sellerId;
     private String bCodeString;
     private DatePickerDialog.OnDateSetListener mDatePickerListener = new DatePickerDialog.OnDateSetListener() {
@@ -100,11 +99,12 @@ public class AddStock extends Activity {
             }
         });
 
-        mAdView = (NativeExpressAdView) findViewById(R.id.adView);
+        NativeExpressAdView mAdView = (NativeExpressAdView) findViewById(R.id.adView);
         mAdView.setVideoOptions(new VideoOptions.Builder()
                 .setStartMuted(true)
                 .build());
         mVideoController = mAdView.getVideoController();
+        //noinspection EmptyMethod
         mVideoController.setVideoLifecycleCallbacks(new VideoController.VideoLifecycleCallbacks() {
             @Override
             public void onVideoEnd() {

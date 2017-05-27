@@ -36,7 +36,7 @@ public class SellerDetails extends AppCompatActivity {
     private static final String TAG = SellerDetails.class.getSimpleName();
     private static final int ADD_ACTIVITY_REQUEST_CODE = 1;
 
-    private ViewHolder holder = new ViewHolder();
+    private final ViewHolder holder = new ViewHolder();
     private ArrayList<Stocks> stocksArrayList;
 
     private String bCode;
@@ -45,8 +45,6 @@ public class SellerDetails extends AppCompatActivity {
     private int p = 0;
 
     private Resources res;
-
-    private AdView mAdView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +66,7 @@ public class SellerDetails extends AppCompatActivity {
 
         displayStocksList();
 
-        mAdView = (AdView) findViewById(R.id.adView);
+        AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
@@ -184,8 +182,7 @@ public class SellerDetails extends AppCompatActivity {
 
     private ArrayList<Stocks> makeCombineList() {
         SQLHelper db = new SQLHelper(this);
-        ArrayList<Stocks> stocksBySeller = db.getAllStocksBySeller(sellerId);
-        return stocksBySeller;
+        return db.getAllStocksBySeller(sellerId);
     }
 
     private List<Stocks> makeList() {

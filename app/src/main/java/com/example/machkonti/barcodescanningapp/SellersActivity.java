@@ -18,7 +18,7 @@ public class SellersActivity extends AppCompatActivity {
 
     private static final int ADD_SELLER_REQUEST_CODE = 1;
 
-    private ViewHolder holder = new ViewHolder();
+    private final ViewHolder holder = new ViewHolder();
     private ArrayList<Seller> sellerArrayList;
 
     public void onItemClick(int position) {

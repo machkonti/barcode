@@ -1,5 +1,6 @@
 package com.example.machkonti.barcodescanningapp.Adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -29,16 +30,14 @@ import java.util.Date;
 public class MainListAdapter extends BaseAdapter implements View.OnClickListener {
 
     private static LayoutInflater inflater = null;
-    public Resources resources;
-    Stocks tmp = null;
+    private final Activity activity;
+    private final ArrayList list;
     int i = 0;
-    private Activity activity;
-    private ArrayList list;
 
     public MainListAdapter(Activity activity, ArrayList list, Resources resources) {
         this.activity = activity;
         this.list = list;
-        this.resources = resources;
+        Resources resources1 = resources;
 
         inflater = (LayoutInflater) this.activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -64,6 +63,7 @@ public class MainListAdapter extends BaseAdapter implements View.OnClickListener
         return position;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
@@ -84,7 +84,7 @@ public class MainListAdapter extends BaseAdapter implements View.OnClickListener
         if (list.size() <= 0) {
             holder.bCodeLabel.setText("no data!");
         } else {
-            tmp = null;
+            Stocks tmp = null;
             tmp = (Stocks) list.get(position);
 
             ArrayList<Expires> exps = new SQLHelper(activity.getApplicationContext()).getExpiresByBCode(tmp.getbCode());
@@ -97,7 +97,7 @@ public class MainListAdapter extends BaseAdapter implements View.OnClickListener
 
                 vi.setOnClickListener(new OnItemClickListener(position));
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 try {
                     Date date = sdf.parse(dateString);
                     long expDateLong = date.getTime();
@@ -122,7 +122,7 @@ public class MainListAdapter extends BaseAdapter implements View.OnClickListener
     }
 
     private class OnItemClickListener implements View.OnClickListener {
-        private int position;
+        private final int position;
 
         public OnItemClickListener(int position) {
             this.position = position;

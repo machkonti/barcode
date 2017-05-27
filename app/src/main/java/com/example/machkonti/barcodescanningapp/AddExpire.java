@@ -19,10 +19,9 @@ import com.google.android.gms.ads.VideoOptions;
 import java.util.Calendar;
 
 public class AddExpire extends AppCompatActivity {
-    NativeExpressAdView mAdView;
-    VideoController mVideoController;
+    private final ViewHolder holder = new ViewHolder();
+    private VideoController mVideoController;
     private int year, month, day;
-    private ViewHolder holder = new ViewHolder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +78,12 @@ public class AddExpire extends AppCompatActivity {
             }
         });
 
-        mAdView = (NativeExpressAdView) findViewById(R.id.adView);
+        NativeExpressAdView mAdView = (NativeExpressAdView) findViewById(R.id.adView);
         mAdView.setVideoOptions(new VideoOptions.Builder()
                 .setStartMuted(true)
                 .build());
         mVideoController = mAdView.getVideoController();
+        //noinspection EmptyMethod
         mVideoController.setVideoLifecycleCallbacks(new VideoController.VideoLifecycleCallbacks() {
             @Override
             public void onVideoEnd() {

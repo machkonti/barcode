@@ -17,16 +17,8 @@ public class Combine {
         return sellerId;
     }
 
-    public void setSellerId(int sellerId) {
-        this.sellerId = sellerId;
-    }
-
     public String getbCode() {
         return bCode;
-    }
-
-    public void setbCode(String bCode) {
-        this.bCode = bCode;
     }
 
     @Override
