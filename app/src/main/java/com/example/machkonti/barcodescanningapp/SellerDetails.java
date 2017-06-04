@@ -26,7 +26,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Machkonti on 10.5.2017 г..
@@ -174,7 +173,11 @@ public class SellerDetails extends AppCompatActivity {
 
     private void displayStocksList() {
 //        makeList();
+        if (stocksArrayList != null) {
+            stocksArrayList = null;
+        }
         stocksArrayList = makeCombineList();
+
         MainListAdapter adapter = new MainListAdapter(SellerDetails.this, stocksArrayList, res);
 
         holder.stocksListView.setAdapter(adapter);
@@ -183,21 +186,6 @@ public class SellerDetails extends AppCompatActivity {
     private ArrayList<Stocks> makeCombineList() {
         SQLHelper db = new SQLHelper(this);
         return db.getAllStocksBySeller(sellerId);
-    }
-
-    private List<Stocks> makeList() {
-        SQLHelper sqh = new SQLHelper(this);
-        ArrayList<Stocks> stocks = sqh.getAllStocks();
-        List<String> rValue = new ArrayList<>();
-        for (int i = 0; i < stocks.size(); i++) {
-            Stocks s = stocks.get(i);
-            List<Expires> te = sqh.getExpiresByBCode(s.getbCode());
-
-            String sb = s.getName() + " :: " + s.getbCode();
-            rValue.add(sb);
-        }
-        this.stocksArrayList = stocks;
-        return stocks;
     }
 
     private void addBcodeDialot() {
@@ -243,7 +231,7 @@ public class SellerDetails extends AppCompatActivity {
         b.putString("bcode", bCode);
         detailedIntent.putExtras(b);
 
-        startActivity(detailedIntent);
+        startActivityForResult(detailedIntent, 0);
     }
 
     @Override

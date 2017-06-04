@@ -1,8 +1,10 @@
 package com.example.machkonti.barcodescanningapp;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
@@ -14,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.machkonti.barcodescanningapp.Adapters.ExpiresListAdapter;
+import com.example.machkonti.barcodescanningapp.Database.Combine;
 import com.example.machkonti.barcodescanningapp.Database.Expires;
 import com.example.machkonti.barcodescanningapp.Database.SQLHelper;
 import com.example.machkonti.barcodescanningapp.Database.Stocks;
@@ -33,6 +36,7 @@ public class StockDetails extends AppCompatActivity {
     private ListView expiresView;
     private ArrayList<Expires> epxs;
     private String bCode, name;
+    private Stocks stock;
 
     private ExpiresListAdapter adapter;
     private int p = 0;
@@ -51,7 +55,7 @@ public class StockDetails extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         bCode = b.get("bcode").toString();
 
-        Stocks stock = getStock(bCode);
+        this.stock = getStock(bCode);
 
         name = stock.getName();
 
@@ -71,9 +75,13 @@ public class StockDetails extends AppCompatActivity {
         if (this.epxs != null) {
             epxs.clear();
         }
+        epxs = null;
         epxs = getEpxs(bCode);
 
-        adapter = new ExpiresListAdapter(this, getEpxs(bCode), getResources());
+        adapter = null;
+        adapter = new ExpiresListAdapter(this,
+                //getEpxs(bCode)
+                epxs, getResources());
         expiresView.setAdapter(adapter);
     }
 
@@ -101,6 +109,23 @@ public class StockDetails extends AppCompatActivity {
 
                 if (item.getItemId() == R.id.delete_stock_menu_item) {
                     // TODO: delete current stock item, end all connected data
+                    AlertDialog.Builder ad = new AlertDialog.Builder(StockDetails.this);
+                    ad.setMessage("Delete Stock - " + stock.getName());
+                    ad.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteStock(stock);
+                            dialog.dismiss();
+                            StockDetails.this.finishAndRemoveTask();
+                        }
+                    });
+                    ad.setNegativeButton("No!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    ad.show();
                 }
                 return false;
             }
@@ -115,6 +140,17 @@ public class StockDetails extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void deleteStock(Stocks stock) {
+        SQLHelper db = new SQLHelper(this);
+        ArrayList<Expires> expires = db.getExpiresByBCode(stock.getbCode());
+        for (int i = 0; i < expires.size(); i++) {
+            db.deleteExpire(expires.get(i));
+        }
+        Combine c = db.getCombineByBCode(stock.getbCode());
+        db.deleteCombine(c);
+        db.deleteStock(stock);
     }
 
     private ArrayList<Expires> getEpxs(String bCode) {

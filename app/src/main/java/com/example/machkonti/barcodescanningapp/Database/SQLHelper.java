@@ -81,6 +81,21 @@ public class SQLHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
+    public Combine getCombineByBCode(String bCode) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(table_combine, c_columns, c_bCode + "=?", new String[]{bCode}, null, null, null, null);
+        if (cursor == null) {
+            return null;
+        }
+        if (cursor.getCount() == 0) {
+            return null;
+        }
+        cursor.moveToFirst();
+        Combine c = new Combine(cursor.getInt(0), cursor.getString(1));
+        cursor.close();
+        return c;
+    }
+
     public Seller getSeller(int sellerId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(table_sellers, ss_columns, ss_id + "=?", new String[]{String.valueOf(sellerId)}, null, null, null, null);
@@ -266,6 +281,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         cursor.close();
         return count;
     }
+
 
     public int getCombinesCount() {
         String query = "SELECT * FROM " + table_combine;

@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
 
     private void displayStocksList() {
-        makeList();
-        MainListAdapter adapter = new MainListAdapter(mainActivity, stocksArrayList, res);
+        stocksArrayList = null;
+        MainListAdapter adapter = new MainListAdapter(mainActivity, makeList(), res);
         stockList.setAdapter(adapter);
     }
 
@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 addBcodeDialot();
             } else {
                 startDetailsActivity(this.bCode);
-
             }
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -95,9 +94,18 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             toast.show();
         }
 
+        if (requestCode == STOCK_DETAILS_ACTIVITY_REQUEST_CODE) {
+            displayStocksList();
+        }
         displayStocksList();
-
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        displayStocksList();
+    }
+
 
     private void addBcodeDialot() {
         AlertDialog.Builder ad = new AlertDialog.Builder(this);
@@ -131,12 +139,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         b.putString("bcode", bCode);
         detailedIntent.putExtras(b);
 
-        startActivity(detailedIntent);
+        this.startActivityForResult(detailedIntent, STOCK_DETAILS_ACTIVITY_REQUEST_CODE);
     }
 
 
     @SuppressWarnings("UnusedReturnValue")
-    private List<String> makeList() {
+    private ArrayList<Stocks> makeList() {
         SQLHelper sqh = new SQLHelper(this);
         ArrayList<Stocks> stocks = sqh.getAllStocks();
         List<String> rValue = new ArrayList<>();
@@ -147,8 +155,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             String sb = s.getName() + " :: " + s.getbCode();
             rValue.add(sb);
         }
-        this.stocksArrayList = stocks;
-        return rValue;
+        return stocks;
     }
 
     public void onItemClick(int position) {
